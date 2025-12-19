@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us Section Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --accent: #0ea5e9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        /* Default Desktop Padding */
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--dark); line-height: 1.2; }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        .lead { font-size: 1.125rem; color: var(--gray); margin-bottom: 2rem; }
+        
+        /* Button Utility */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background 0.2s;
+            border: 2px solid var(--dark);
+        }
+        .btn:hover { background: var(--primary); border-color: var(--primary); }
+        
+        .btn-outline { background: transparent; border: 2px solid var(--dark); color: var(--dark); }
+        .btn-outline:hover { background: var(--dark); color: white; }
+
+        /* Generic Image Placeholder Class */
+        img { display: block; max-width: 100%; height: auto; }
+
+        /* --- GLOBAL MOBILE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            section { padding: 3rem 1.5rem; } /* Reduce vertical spacing on mobile */
+            h2 { font-size: 2rem; } /* Smaller headlines */
+            .section-intro { margin-bottom: 2rem; }
+        }
+
+        /* =========================================
+           LAYOUT 1: CLASSIC SPLIT (Text Left / Image Right)
+           ========================================= */
+        .about-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img-simple {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            background-color: #e2e8f0; 
+        }
+
+        @media (max-width: 900px) {
+            .about-split { grid-template-columns: 1fr; gap: 2rem; }
+            .about-split .about-image { order: -1; margin-bottom: 1rem; } /* Image moves to top */
+        }
+
+        /* =========================================
+           LAYOUT 2: THE "OVERLAP" (Architectural Style)
+           ========================================= */
+        .overlap-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            align-items: center;
+        }
+
+        .overlap-image {
+            grid-column: 1 / 9;
+            grid-row: 1;
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 4px;
+            background-color: #cbd5e1;
+        }
+
+        .overlap-content {
+            grid-column: 7 / -1; /* Overlaps the image */
+            grid-row: 1;
+            background: white;
+            padding: 4rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+            position: relative; 
+            z-index: 2;
+        }
+
+        @media (max-width: 900px) {
+            .overlap-container { display: flex; flex-direction: column; }
+            .overlap-image { height: 300px; margin-bottom: -50px; width: 95%; z-index: 1; }
+            .overlap-content { width: 100%; padding: 2rem; z-index: 2; }
+        }
+
+        /* =========================================
+           LAYOUT 3: THE "NUMBERS" (Stats Focused)
+           ========================================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 3rem;
+        }
+
+        .stat-item h3 { font-size: 3.5rem; color: var(--accent); margin-bottom: 0.5rem; line-height: 1; }
+        .stat-item p { color: #94a3b8; font-size: 0.9rem; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+        }
+        
+        @media (max-width: 480px) {
+             /* On very small screens, stack single column to avoid squishing */
+            .stats-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+        }
+
+        /* =========================================
+           LAYOUT 4: VERTICAL TIMELINE
+           ========================================= */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            border-left: 2px solid var(--border);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.6rem; 
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px var(--border);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            /* Tweak padding for mobile space */
+            .timeline-wrapper { padding-left: 1.5rem; }
+            .timeline-item::before { left: -2.1rem; }
+        }
+
+        /* =========================================
+           LAYOUT 5: THE FOUNDER'S NOTE
+           ========================================= */
+        .founder-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .founder-img img {
+            width: 100%;
+            border-radius: 12px;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+            background-color: #e2e8f0;
+        }
+        .founder-img:hover img { filter: grayscale(0%); }
+
+        .founder-quote {
+            font-size: 1.5rem;
+            font-family: serif;
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 2rem;
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: var(--gray);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .founder-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .founder-img { max-width: 300px; margin: 0 auto; } /* Center image on mobile */
+        }
+
+        /* =========================================
+           LAYOUT 6: THE VALUES GRID
+           ========================================= */
+        .values-container {
+            display: grid;
+            /* Changed minmax to 280px to fit better on small iPhones (320px width) */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 16px;
+            transition: transform 0.2s;
+        }
+
+        .value-card:hover { transform: translateY(-5px); background: #eff6ff; }
+        
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: white;
+            width: 60px; height: 60px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            color: var(--primary);
+        }
+
+        /* =========================================
+           LAYOUT 7: THE TEAM GALLERY
+           ========================================= */
+        .team-grid {
+            display: grid;
+            /* 200px allows for 2 columns on most mobiles, 1 on very small */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member { text-align: center; }
+        
+        .member-photo {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            filter: grayscale(100%);
+            transition: 0.3s;
+            background-color: #e2e8f0;
+        }
+
+        .team-member:hover .member-photo { filter: grayscale(0%); }
+
+        .member-name { font-weight: 700; font-size: 1.1rem; color: var(--dark); }
+        .member-role { color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.25rem;}
+
+        /* =========================================
+           LAYOUT 8: OFFSET BORDER (Modern)
+           ========================================= */
+        .offset-wrapper {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .offset-border {
+            border: 2px solid var(--dark);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .offset-inner {
+            background: white;
+            position: relative;
+            z-index: 2;
+            transform: translate(1.5rem, 1.5rem);
+            padding: 3rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .offset-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        @media (max-width: 900px) {
+            .offset-wrapper { padding: 0; margin-top: 1rem; }
+            .offset-border { display: none; } /* Disable offset effect on mobile */
+            .offset-inner { transform: none; padding: 2rem; border: 1px solid var(--border); }
+            
+            /* Stack the content internally */
+            .offset-content-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .offset-content-grid img { order: -1; } /* Image top on mobile */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            ← Back to Library
+        </a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="hero.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Hero</a>
+            <a href="about-us.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">About</a>
+            <a href="service-section.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Services</a>
+            <a href="projects.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Projects</a>
+            <a href="testimonials.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Testimonials</a>
+            <a href="faq.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">FAQ</a>
+            <a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Contact</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>About Us Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">Mobile Optimized Layouts</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 01</span>
+                <h2>The Classic Split</h2>
+            </div>
+            <div class="about-split">
+                <div class="about-content">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">Building better digital experiences since 2015.</h3>
+                    <p class="lead">We are a team of passionate developers and designers who believe in the power of the web.</p>
+                    <p style="margin-bottom: 1.5rem; color: var(--gray);">
+                        Founded in Melbourne, we started with a simple mission: to make high-quality web development accessible to small businesses. Over the years, we've grown into a full-service agency, but our core values remain the same.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" class="btn">Our Portfolio</a>
+                        <a href="#" class="btn btn-outline">Meet the Team</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img class="about-img-simple" src="https://placehold.co/600x500/cbd5e1/64748b?text=Image+Placeholder" alt="Team meeting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 02</span>
+                <h2>The Overlap</h2>
+                <p>Creates depth and looks very high-end/architectural.</p>
+            </div>
+            
+            <div class="overlap-container">
+                <img class="overlap-image" src="https://placehold.co/1200x600/94a3b8/FFF?text=Office+Space" alt="Office">
+                <div class="overlap-content">
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">More than just a workspace.</h3>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">
+                        We believe that environment dictates performance. That's why we've built a culture that prioritizes creativity, autonomy, and continuous learning. When you work with us, you're not just hiring a vendor; you're partnering with a team that is invested in your success.
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--primary); font-weight: bold;">✓</span> 100% In-house team</li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--primary); font-weight: bold;">✓</span> Agile methodology</li>
+                        <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--primary); font-weight: bold;">✓</span> Transparent communication</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--dark); color: white;">
+        <div class="container">
+            <div style="max-width: 700px;">
+                <span class="subtitle" style="color: var(--accent);">Layout 03</span>
+                <h2 style="color: white;">Driven by Data.<br>Defined by Results.</h2>
+                <p style="opacity: 0.8; font-size: 1.1rem;">We don't rely on guesswork. Every strategy we implement is backed by years of data and testing.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>10+</h3>
+                    <p>Years in Business</p>
+                </div>
+                <div class="stat-item">
+                    <h3>250+</h3>
+                    <p>Projects Delivered</p>
+                </div>
+                <div class="stat-item">
+                    <h3>18</h3>
+                    <p>Design Awards</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Client Retention</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro" style="margin: 0 auto 3rem auto; text-align: center;">
+                <span class="subtitle">Layout 04</span>
+                <h2>Our Journey</h2>
+                <p>How we got from a garage to a global agency.</p>
+            </div>
+
+            <div class="timeline-wrapper">
+                <div class="timeline-item">
+                    <span class="timeline-year">2015</span>
+                    <h3>The Beginning</h3>
+                    <p style="color: var(--gray);">Started in a spare bedroom with one laptop and a lot of coffee. Our first client was a local bakery.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2018</span>
+                    <h3>First Expansion</h3>
+                    <p style="color: var(--gray);">Moved into our first real office and hired our first full-time developer. Reached 50 active clients.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2021</span>
+                    <h3>Going Global</h3>
+                    <p style="color: var(--gray);">Opened a satellite office in London to handle our growing European customer base.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-year">2024</span>
+                    <h3>The Next Chapter</h3>
+                    <p style="color: var(--gray);">Launching our own SaaS product line to help small businesses scale even faster.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #fff8f0;"> <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 05</span>
+                <h2>Founder's Note</h2>
+            </div>
+            
+            <div class="founder-layout">
+                <div class="founder-img">
+                    <img src="https://placehold.co/400x500/cbd5e1/64748b?text=Portrait" alt="Founder">
+                    <div style="margin-top: 1rem; text-align: center; font-weight: bold;">James Sterling</div>
+                    <div style="text-align: center; color: var(--gray); font-size: 0.9rem;">CEO & Founder</div>
+                </div>
+                <div>
+                    <blockquote class="founder-quote">
+                        "We didn't start this company to be the biggest agency in the world. We started it to be the best for the people who matter most: our clients and our employees. Integrity isn't just a buzzword here; it's the metric by which we measure every decision."
+                    </blockquote>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">
+                        Before founding this agency, I worked for the big corporate firms. I saw how clients were treated like numbers on a spreadsheet. I knew there had to be a better way—a way to combine enterprise-level quality with the personal touch of a small business.
+                    </p>
+                    <p style="color: var(--gray);">
+                        Today, I'm proud to say we haven't lost that spark. Every project is personal to us.
+                    </p>
+                    <div class="signature">James Sterling</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Our Core Values</h2>
+                <p>The principles that guide our work every single day.</p>
+            </div>
+
+            <div class="values-container">
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Innovation</h3>
+                    <p style="color: var(--gray);">We never settle for "good enough." We are constantly exploring new technologies to give our clients an edge.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Transparency</h3>
+                    <p style="color: var(--gray);">No hidden fees. No technical jargon designed to confuse you. Just honest, clear communication.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">❤️</div>
+                    <h3>Empathy</h3>
+                    <p style="color: var(--gray);">We design for humans, not robots. We strive to understand the end-user's needs in everything we build.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro" style="text-align: center; margin: 0 auto 3rem auto;">
+                <span class="subtitle">Layout 07</span>
+                <h2>Meet the Team</h2>
+                <p>The brains behind the operation.</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <img class="member-photo" src="https://placehold.co/300x300/cbd5e1/64748b?text=Photo" alt="Sarah">
+                    <div class="member-name">Sarah Jenkins</div>
+                    <div class="member-role">Creative Director</div>
+                </div>
+                <div class="team-member">
+                    <img class="member-photo" src="https://placehold.co/300x300/cbd5e1/64748b?text=Photo" alt="Mike">
+                    <div class="member-name">Mike Ross</div>
+                    <div class="member-role">Lead Developer</div>
+                </div>
+                <div class="team-member">
+                    <img class="member-photo" src="https://placehold.co/300x300/cbd5e1/64748b?text=Photo" alt="Jessica">
+                    <div class="member-name">Jessica Lee</div>
+                    <div class="member-role">Project Manager</div>
+                </div>
+                <div class="team-member">
+                    <img class="member-photo" src="https://placehold.co/300x300/cbd5e1/64748b?text=Photo" alt="David">
+                    <div class="member-name">David Chen</div>
+                    <div class="member-role">SEO Specialist</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>The Offset Border</h2>
+                <p>A trendy, modern look that breaks the grid slightly.</p>
+            </div>
+
+            <div class="offset-wrapper">
+                <div class="offset-border"></div>
+                <div class="offset-inner">
+                    <div class="offset-content-grid">
+                        <div>
+                            <h3 style="font-size: 2rem; margin-bottom: 1rem;">Why choose us?</h3>
+                            <p style="color: var(--gray); margin-bottom: 1rem;">
+                                In a crowded market, we stand out by focusing on ROI. We don't just build pretty websites; we build revenue-generating assets.
+                            </p>
+                            <p style="color: var(--gray);">
+                                From the first line of code to the final launch, our process is designed to minimize risk and maximize impact.
+                            </p>
+                            <a href="#" style="color: var(--primary); font-weight: 700; margin-top: 1rem; display: inline-block;">Let's discuss your project &rarr;</a>
+                        </div>
+                        <div>
+                            <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Working+Hard" style="width: 100%; border-radius: 4px;" alt="Working">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications & Trust Badges Master Kit</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (Inherited from Service Master) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+
+        /* --- LAYOUT 1: THE PRE-FOOTER BAR --- */
+        /* Designed to sit right above the footer. Low visual noise. */
+        .trust-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .trust-bar:hover { opacity: 1; }
+
+        .trust-logo {
+            filter: grayscale(100%);
+            transition: filter 0.3s, transform 0.2s;
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .trust-logo:hover {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .trust-bar { justify-content: center; }
+            .trust-logo { height: 40px; }
+        }
+
+        /* --- LAYOUT 2: THE BADGE CLUSTER --- */
+        /* Grouped card designed for specific detailed verification */
+        .cluster-card {
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cluster-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .cluster-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 140px;
+            height: 100px;
+        }
+
+        .cluster-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .verify-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .verify-link:hover { text-decoration: underline; }
+
+        /* --- LAYOUT 3: SIDEBAR WIDGET STACK --- */
+        /* Vertical layout meant for sidebars or sticky columns */
+        .sidebar-wrapper {
+            max-width: 350px; /* Constrained for demo purposes */
+            margin: 0 auto; 
+            border: 1px dashed var(--border); /* Visual guide for demo */
+            padding: 1rem;
+        }
+
+        .widget-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .widget-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .widget-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .widget-row:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .widget-img { width: 50px; height: 50px; object-fit: contain; }
+        
+        .widget-text h4 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .widget-text span { font-size: 0.75rem; color: #16a34a; background: #dcfce7; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+        /* --- LAYOUT 4: THE CERTIFICATE FEATURE --- */
+        /* Zig-zag style specifically for showing a document */
+        .cert-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .cert-visual {
+            position: relative;
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .cert-frame {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d4af37; /* Gold border nuance */
+            display: inline-block;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+
+        .cert-frame:hover { transform: rotate(0deg) scale(1.02); }
+
+        .cert-badge-overlay {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 1.2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .cert-split { grid-template-columns: 1fr; }
+            .cert-visual { order: -1; }
+        }
+
+        /* --- LAYOUT 5: EXPLAINER GRID --- */
+        /* Grid that explains what the certification actually means for the client */
+        .explainer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .explainer-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .explainer-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .explainer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .explainer-logo { width: 60px; height: 60px; object-fit: contain; }
+        
+        .explainer-body h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .explainer-body p { font-size: 0.9rem; color: var(--gray); }
+
+        /* --- LAYOUT 6: DARK RIBBON --- */
+        /* High contrast strip */
+        .dark-ribbon-section {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem; /* Slimmer padding */
+        }
+
+        .ribbon-flex {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .ribbon-item {
+            text-align: center;
+        }
+
+        .ribbon-img {
+            height: 60px;
+            filter: brightness(0) invert(1); /* Turns logos white */
+            opacity: 0.6;
+            margin-bottom: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        .ribbon-item:hover .ribbon-img { opacity: 1; }
+
+        .ribbon-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+        }
+
+        /* --- LAYOUT 7: SCROLL SNAP STRIP --- */
+        /* For when you have too many badges to fit in a grid */
+        .badge-scroller {
+            overflow-x: auto;
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 0 2rem 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .badge-pill {
+            min-width: 250px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 100px; /* Pill shape */
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            scroll-snap-align: start;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .badge-pill img { width: 40px; height: 40px; object-fit: contain; }
+        .badge-pill span { font-weight: 600; font-size: 0.9rem; }
+        
+        .badge-scroller::-webkit-scrollbar { height: 6px; }
+        .badge-scroller::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 10px; }
+
+        /* --- LAYOUT 8: THE "SWISS" LIST (CERT VARIATION) --- */
+        /* Minimal list view */
+        .cert-list { border-top: 1px solid var(--border); }
+        
+        .cert-row {
+            display: grid;
+            grid-template-columns: 100px 2fr 1fr;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .cert-row-img { width: 60px; height: 60px; object-fit: contain; filter: grayscale(100%); transition: 0.3s; }
+        .cert-row:hover .cert-row-img { filter: grayscale(0%); }
+        
+        .cert-row-info h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+        .cert-row-info p { color: var(--gray); font-size: 0.9rem; }
+        
+        .cert-row-meta { text-align: right; color: var(--gray); font-size: 0.85rem; font-family: monospace; }
+
+        @media (max-width: 768px) {
+            .cert-row { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
+            .cert-row-meta { text-align: center; }
+            .cert-row-img { margin: 0 auto; }
+        }
+
+        /* --- LAYOUT 9: FLOATING VERIFICATION (Card Overlay) --- */
+        /* A card with a background image and a "stamp" badge */
+        .hero-badge-card {
+            background: url('https://placehold.co/1200x400/1e293b/FFF?text=Team+on+Site') center/cover no-repeat;
+            height: 400px;
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: 20px;
+        }
+
+        .floating-badge {
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .floating-badge img { width: 80px; margin-bottom: 1rem; }
+        .floating-badge h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .floating-badge p { font-size: 0.85rem; color: var(--gray); }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="about-us.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">About</a>
+            <a href="testimonials.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Testimonials</a>
+            <a href="trust.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Trust</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Certifications & Trust Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">Standardized layouts for authority, credentials, and social proof.</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 01 (Footer Bar)</span>
+                <h2>The Pre-Footer Trust Bar</h2>
+                <p>Designed to sit immediately above your main footer. Low profile, grayscale until hovered.</p>
+            </div>
+            
+            <div class="trust-bar">
+                <img src="https://placehold.co/150x60/EEE/31343C?text=Master+Builders" alt="Cert 1" class="trust-logo">
+                <img src="https://placehold.co/150x60/EEE/31343C?text=ISO+9001" alt="Cert 2" class="trust-logo">
+                <img src="https://placehold.co/150x60/EEE/31343C?text=SafeWork" alt="Cert 3" class="trust-logo">
+                <img src="https://placehold.co/150x60/EEE/31343C?text=Green+Building" alt="Cert 4" class="trust-logo">
+                <img src="https://placehold.co/150x60/EEE/31343C?text=Housing+Assoc" alt="Cert 5" class="trust-logo">
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 02 (Badge Cluster)</span>
+                <h2>The Verification Cluster</h2>
+                <p>A centralized grouping for high-importance credentials. Includes a call-to-action for verification.</p>
+            </div>
+
+            <div class="cluster-card">
+                <h3>Accredited Professionals</h3>
+                <p style="color: var(--gray); margin-top: 0.5rem;">We are fully licensed and insured for your peace of mind.</p>
+                
+                <div class="cluster-grid">
+                    <div class="cluster-item">
+                        <img src="https://placehold.co/120x80/2563eb/FFF?text=HIA+Member" alt="HIA">
+                    </div>
+                    <div class="cluster-item">
+                        <img src="https://placehold.co/120x80/2563eb/FFF?text=License+Checked" alt="License">
+                    </div>
+                    <div class="cluster-item">
+                        <img src="https://placehold.co/120x80/2563eb/FFF?text=Insurance" alt="Insured">
+                    </div>
+                </div>
+
+                <a href="#" class="verify-link">
+                    <span>View our public license registry</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03 (Sidebar Widget)</span>
+                <h2>Sidebar Widget Stack</h2>
+                <p>Vertical layout designed for blog sidebars or service page sticky columns.</p>
+            </div>
+
+            <div class="sidebar-wrapper">
+                
+                <div class="widget-box">
+                    <div class="widget-title">Verified Credentials</div>
+                    <div class="widget-list">
+                        <div class="widget-row">
+                            <img src="https://placehold.co/50x50/e2e8f0/64748b?text=CM" class="widget-img" alt="Icon">
+                            <div class="widget-text">
+                                <h4>Certified Master</h4>
+                                <span>Active</span>
+                            </div>
+                        </div>
+                        <div class="widget-row">
+                            <img src="https://placehold.co/50x50/e2e8f0/64748b?text=PL" class="widget-img" alt="Icon">
+                            <div class="widget-text">
+                                <h4>Public Liability</h4>
+                                <span>$20M Cover</span>
+                            </div>
+                        </div>
+                        <div class="widget-row">
+                            <img src="https://placehold.co/50x50/e2e8f0/64748b?text=WC" class="widget-img" alt="Icon">
+                            <div class="widget-text">
+                                <h4>Workers Comp</h4>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-box" style="text-align: center;">
+                    <img src="https://placehold.co/80x80/2563eb/FFF?text=5+Star" style="border-radius: 50%; margin-bottom: 1rem;">
+                    <h4>Customer Choice Award</h4>
+                    <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1rem;">Voted #1 in Melbourne Region 2024.</p>
+                    <a href="#" class="verify-link">Read Reviews</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 04 (Visual Feature)</span>
+                <h2>The Certificate Feature</h2>
+                <p>Highlighting a single, critical document (like a license or award) with visual flair.</p>
+            </div>
+
+            <div class="cert-split">
+                <div class="cert-content">
+                    <div class="icon-box">🏆</div>
+                    <h3>ISO 9001 Certified</h3>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">
+                        Our quality management systems are internationally recognized. This means every project we undertake follows a strict set of protocols to ensure consistency, safety, and excellence.
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+                        <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;">
+                            <span style="color: var(--primary); font-weight: bold;">✓</span> Annual external audits
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;">
+                            <span style="color: var(--primary); font-weight: bold;">✓</span> Standardized safety procedures
+                        </li>
+                        <li style="margin-bottom: 0.5rem; display: flex; gap: 0.5rem;">
+                            <span style="color: var(--primary); font-weight: bold;">✓</span> Continuous improvement cycle
+                        </li>
+                    </ul>
+                    <a href="#" style="padding: 0.75rem 1.5rem; background: var(--dark); color: white; text-decoration: none; border-radius: 6px; font-size: 0.9rem;">View Certificate PDF</a>
+                </div>
+
+                <div class="cert-visual">
+                    <div class="cert-frame">
+                        <img src="https://placehold.co/400x550/FFF/e2e8f0?text=Certificate+Document" alt="Certificate" style="display: block;">
+                    </div>
+                    <div class="cert-badge-overlay">
+                        Valid<br>2025
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 05 (Explainer Grid)</span>
+                <h2>Explainer Cards</h2>
+                <p>Don't just show the logo—explain what it means for the customer.</p>
+            </div>
+
+            <div class="explainer-grid">
+                <div class="explainer-card">
+                    <div class="explainer-header">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Logo" class="explainer-logo" alt="Logo">
+                        <div>
+                            <span class="subtitle" style="margin:0; font-size: 0.7rem;">Safety</span>
+                            <h3>OH&S Compliant</h3>
+                        </div>
+                    </div>
+                    <div class="explainer-body">
+                        <p>We adhere to the strictest occupational health and safety standards, ensuring a zero-harm environment on your property.</p>
+                    </div>
+                </div>
+
+                <div class="explainer-card">
+                    <div class="explainer-header">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Logo" class="explainer-logo" alt="Logo">
+                        <div>
+                            <span class="subtitle" style="margin:0; font-size: 0.7rem;">Quality</span>
+                            <h3>Master Painter</h3>
+                        </div>
+                    </div>
+                    <div class="explainer-body">
+                        <p>Recognized for excellence in finish and preparation. We use only premium materials backed by manufacturer warranties.</p>
+                    </div>
+                </div>
+
+                <div class="explainer-card">
+                    <div class="explainer-header">
+                        <img src="https://placehold.co/100x100/e2e8f0/64748b?text=Logo" class="explainer-logo" alt="Logo">
+                        <div>
+                            <span class="subtitle" style="margin:0; font-size: 0.7rem;">Environment</span>
+                            <h3>Green Star</h3>
+                        </div>
+                    </div>
+                    <div class="explainer-body">
+                        <p>Commitment to sustainable building practices, waste reduction, and eco-friendly material sourcing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-ribbon-section">
+        <div class="container">
+            <div class="ribbon-flex">
+                <div class="ribbon-item">
+                    <img src="https://placehold.co/200x80/000/FFF?text=Partner+1" class="ribbon-img" alt="Logo">
+                    <span class="ribbon-label">Strategic Partner</span>
+                </div>
+                <div class="ribbon-item">
+                    <img src="https://placehold.co/200x80/000/FFF?text=Partner+2" class="ribbon-img" alt="Logo">
+                    <span class="ribbon-label">Authorized Dealer</span>
+                </div>
+                <div class="ribbon-item">
+                    <img src="https://placehold.co/200x80/000/FFF?text=Partner+3" class="ribbon-img" alt="Logo">
+                    <span class="ribbon-label">Certified Installer</span>
+                </div>
+                <div class="ribbon-item">
+                    <img src="https://placehold.co/200x80/000/FFF?text=Partner+4" class="ribbon-img" alt="Logo">
+                    <span class="ribbon-label">Global Standards</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07 (Horizontal Scroll)</span>
+                <h2>Badge Scroller</h2>
+                <p>Useful when you have many accreditations and need a compact way to display them. (Scroll/Swipe horizontally)</p>
+            </div>
+
+            <div class="badge-scroller">
+                <div class="badge-pill">
+                    <img src="https://placehold.co/60x60/2563eb/FFF?text=A" alt="Icon">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--gray); text-transform: uppercase;">Member since 2018</div>
+                        <span>Assoc. of Builders</span>
+                    </div>
+                </div>
+                <div class="badge-pill">
+                    <img src="https://placehold.co/60x60/2563eb/FFF?text=B" alt="Icon">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--gray); text-transform: uppercase;">Verified</div>
+                        <span>Global Insurance</span>
+                    </div>
+                </div>
+                <div class="badge-pill">
+                    <img src="https://placehold.co/60x60/2563eb/FFF?text=C" alt="Icon">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--gray); text-transform: uppercase;">Awarded</div>
+                        <span>Safety First</span>
+                    </div>
+                </div>
+                <div class="badge-pill">
+                    <img src="https://placehold.co/60x60/2563eb/FFF?text=D" alt="Icon">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--gray); text-transform: uppercase;">Certified</div>
+                        <span>Eco Friendly</span>
+                    </div>
+                </div>
+                <div class="badge-pill">
+                    <img src="https://placehold.co/60x60/2563eb/FFF?text=E" alt="Icon">
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--gray); text-transform: uppercase;">License</div>
+                        <span>VIC Building</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08 (Swiss List)</span>
+                <h2>Detailed Credential List</h2>
+                <p>A clean, professional list format for technical specifications or compliance data.</p>
+            </div>
+
+            <div class="cert-list">
+                <div class="cert-row">
+                    <img src="https://placehold.co/100x100/e2e8f0/64748b?text=ISO" class="cert-row-img" alt="ISO">
+                    <div class="cert-row-info">
+                        <h3>ISO 14001:2015</h3>
+                        <p>Environmental management systems - Requirements with guidance for use.</p>
+                    </div>
+                    <div class="cert-row-meta">
+                        Ref: #88392-A<br>
+                        Exp: Dec 2026
+                    </div>
+                </div>
+                
+                <div class="cert-row">
+                    <img src="https://placehold.co/100x100/e2e8f0/64748b?text=AS" class="cert-row-img" alt="Standards">
+                    <div class="cert-row-info">
+                        <h3>AS/NZS 4801</h3>
+                        <p>Occupational health and safety management systems.</p>
+                    </div>
+                    <div class="cert-row-meta">
+                        Ref: #11204-C<br>
+                        Exp: Oct 2025
+                    </div>
+                </div>
+
+                <div class="cert-row">
+                    <img src="https://placehold.co/100x100/e2e8f0/64748b?text=PCC" class="cert-row-img" alt="Compliance">
+                    <div class="cert-row-info">
+                        <h3>Plumbing Code Compliance</h3>
+                        <p>Certified for gas fitting, sanitary, and roofing works.</p>
+                    </div>
+                    <div class="cert-row-meta">
+                        Lic: #99402<br>
+                        Status: Active
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 09 (Overlay)</span>
+                <h2>Floating Verification</h2>
+                <p>Great for showcasing a "Team on site" or specific guarantee backed by an organization.</p>
+            </div>
+
+            <div class="hero-badge-card">
+                <div class="hero-overlay"></div>
+                
+                <div class="floating-badge">
+                    <img src="https://placehold.co/150x150/2563eb/FFF?text=Guaranteed" alt="Badge">
+                    <h3>10 Year Guarantee</h3>
+                    <p>Backed by the Master Builders Association. If it's not right, we fix it. Period.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

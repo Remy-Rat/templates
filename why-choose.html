@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features & Why Choose Us Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (Matched to Service Kit) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981; /* Added for checkmarks */
+            --danger: #ef4444;  /* Added for comparison tables */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        
+        /* Utility for icons (Matched) */
+        .icon-box {
+            width: 50px; height: 50px; background: #eff6ff; color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; margin-bottom: 1.5rem; font-weight: bold; font-size: 1.25rem;
+        }
+
+        /* =========================================
+           LAYOUT 1: THE STANDARD BENEFIT GRID
+           ========================================= */
+        .feature-grid-classic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .feature-item h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .feature-item p { color: var(--gray); font-size: 0.95rem; }
+
+        /* =========================================
+           LAYOUT 2: THE HIGHLIGHT BAR (TRUST STRIP)
+           ========================================= */
+        /* Note: Often used between sections, simpler padding */
+        .highlight-bar {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem 0;
+            border-bottom: none;
+        }
+
+        .highlight-flex {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+            text-align: center;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .check-circle {
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .highlight-flex { flex-direction: column; gap: 1rem; align-items: flex-start; }
+        }
+
+        /* =========================================
+           LAYOUT 3: ALTERNATING FEATURE ROWS
+           ========================================= */
+        .alt-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .alt-row:last-child { margin-bottom: 0; }
+        .alt-row:nth-child(even) .alt-content { order: 2; }
+        .alt-row:nth-child(even) .alt-img { order: 1; }
+
+        .alt-img img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-list-check { list-style: none; margin-top: 1.5rem; }
+        .feature-list-check li { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--gray); }
+        .feature-list-check li::before { content: "✓"; color: var(--primary); font-weight: 900; }
+
+        @media (max-width: 900px) {
+            .alt-row { grid-template-columns: 1fr; gap: 2rem; }
+            .alt-row:nth-child(even) .alt-content { order: 1; }
+            .alt-row:nth-child(even) .alt-img { order: 2; }
+        }
+
+        /* =========================================
+           LAYOUT 4: CENTRAL HUB (IMAGE CENTER)
+           ========================================= */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hub-col { display: flex; flex-direction: column; gap: 2.5rem; }
+        
+        .hub-feature { text-align: right; }
+        .hub-feature h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .hub-feature p { font-size: 0.9rem; color: var(--gray); }
+
+        /* Right column aligns left */
+        .hub-col.right .hub-feature { text-align: left; }
+
+        .hub-center-img {
+            width: 100%;
+            border-radius: 20px; /* Specific rounded style */
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 900px) {
+            .hub-grid { grid-template-columns: 1fr; }
+            .hub-col { gap: 1.5rem; }
+            .hub-feature, .hub-col.right .hub-feature { text-align: left; display: flex; gap: 1rem; align-items: flex-start; }
+            .hub-center-img { aspect-ratio: 16/9; order: -1; }
+        }
+
+        /* =========================================
+           LAYOUT 5: STATS BANNER
+           ========================================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            background: var(--light);
+            border-radius: 16px;
+            padding: 3rem;
+        }
+
+        .stat-item h3 { font-size: 3rem; color: var(--primary); margin-bottom: 0; line-height: 1; }
+        .stat-item p { color: var(--gray); font-weight: 600; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; padding: 2rem; }
+        }
+
+        /* =========================================
+           LAYOUT 6: SMALL CARDS (DENSE GRID)
+           ========================================= */
+        .dense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .dense-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+
+        .dense-card:hover { border-color: var(--primary); }
+        .dense-card h3 { font-size: 1rem; margin-top: 1rem; margin-bottom: 0.25rem; }
+        .dense-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.4; }
+
+        /* =========================================
+           LAYOUT 7: COMPARISON TABLE (US VS THEM)
+           ========================================= */
+        .comparison-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .comp-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        
+        .comp-table th, .comp-table td {
+            padding: 1.25rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-table th { background: var(--light); font-weight: 600; }
+        .comp-table th.us-col { background: #eff6ff; color: var(--primary); width: 30%; }
+        
+        .comp-table td.us-col { background: #eff6ff; font-weight: 600; color: var(--dark); border-bottom: 1px solid #dbeafe; }
+        
+        .icon-check { color: var(--success); font-weight: bold; }
+        .icon-cross { color: var(--danger); font-weight: bold; }
+
+        /* =========================================
+           LAYOUT 8: HOVER TILES (SQUARE GRID)
+           ========================================= */
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--border); /* Borders via gap */
+            border: 1px solid var(--border);
+        }
+
+        .tile-item {
+            background: white;
+            aspect-ratio: 1/1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .tile-item:hover { background: #f1f5f9; }
+        .tile-icon { font-size: 2rem; margin-bottom: 1rem; color: var(--primary); }
+        .tile-item p { opacity: 0; transform: translateY(10px); transition: all 0.3s; height: 0; overflow: hidden; font-size: 0.9rem; color: var(--gray); }
+        .tile-item:hover p { opacity: 1; transform: translateY(0); height: auto; margin-top: 0.5rem; }
+
+        /* =========================================
+           LAYOUT 9: GLASS OVERLAY (BACKGROUND)
+           ========================================= */
+        .glass-section {
+            background-image: url('https://placehold.co/1200x600/1e293b/FFF?text=Background+Texture');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 6rem 2rem;
+        }
+        
+        .glass-overlay {
+            position: absolute; inset: 0; background: rgba(15, 23, 42, 0.8);
+        }
+
+        .glass-grid {
+            position: relative; z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .glass-card h3 { color: white; }
+        .glass-card p { color: #cbd5e1; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="about-us.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">About</a>
+            <a href="trust.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Trust</a>
+            <a href="why-choose.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Why Choose</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Features / Why Choose Us Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">Standardized layouts for benefits, stats, and trust indicators.</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 01</span>
+                <h2>Core Benefits</h2>
+                <p>Simple, icon-led value propositions. The most versatile layout.</p>
+            </div>
+            <div class="feature-grid-classic">
+                <div class="feature-item">
+                    <div class="icon-box">⚡</div>
+                    <h3>Fast Turnaround</h3>
+                    <p>We value your time. Our streamlined process ensures your project is delivered on schedule, every single time.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-box">🛡️</div>
+                    <h3>Licensed & Insured</h3>
+                    <p>Peace of mind is standard. We carry full liability insurance and all our staff are fully certified.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-box">💎</div>
+                    <h3>Premium Quality</h3>
+                    <p>We don't cut corners. We use only the highest grade materials backed by manufacturer warranties.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-box">💬</div>
+                    <h3>Direct Communication</h3>
+                    <p>No call centers. You'll have a direct line to your project manager from start to finish.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="highlight-bar">
+        <div class="container">
+            <div class="highlight-flex">
+                <div class="highlight-item">
+                    <div class="check-circle">✓</div>
+                    <span>No Call-out Fees</span>
+                </div>
+                <div class="highlight-item">
+                    <div class="check-circle">✓</div>
+                    <span>Same Day Service</span>
+                </div>
+                <div class="highlight-item">
+                    <div class="check-circle">✓</div>
+                    <span>Upfront Pricing</span>
+                </div>
+                <div class="highlight-item">
+                    <div class="check-circle">✓</div>
+                    <span>5-Star Rated</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--light);">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03</span>
+                <h2>Detailed Breakdown</h2>
+                <p>Best for explaining complex benefits that need visual proof.</p>
+            </div>
+
+            <div class="alt-row">
+                <div class="alt-content">
+                    <div class="icon-box">01</div>
+                    <h3>We Handle Everything</h3>
+                    <p style="color: var(--gray);">From the initial consultation to the final cleanup, our team manages the entire lifecycle of the project.</p>
+                    <ul class="feature-list-check">
+                        <li>Project Management included</li>
+                        <li>Council approval handling</li>
+                        <li>Site preparation and cleanup</li>
+                    </ul>
+                </div>
+                <div class="alt-img">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Project+Management" alt="Management">
+                </div>
+            </div>
+
+            <div class="alt-row">
+                <div class="alt-content">
+                    <div class="icon-box">02</div>
+                    <h3>Transparent Pricing</h3>
+                    <p style="color: var(--gray);">No hidden fees or surprise invoices. We provide a detailed fixed-price quote before we lift a finger.</p>
+                    <ul class="feature-list-check">
+                        <li>Itemized digital quotes</li>
+                        <li>No hidden "sundries" charges</li>
+                        <li>Flexible payment options</li>
+                    </ul>
+                </div>
+                <div class="alt-img">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Pricing+Transparency" alt="Pricing">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro" style="margin-bottom: 4rem; text-align: center; margin-left: auto; margin-right: auto;">
+                <span class="subtitle">Layout 04</span>
+                <h2>The Difference</h2>
+                <p>A centered visual approach to showcase a product or core service.</p>
+            </div>
+
+            <div class="hub-grid">
+                <div class="hub-col">
+                    <div class="hub-feature">
+                        <h3>Locally Owned</h3>
+                        <p>Born and bred in Melbourne. We understand the local conditions.</p>
+                    </div>
+                    <div class="hub-feature">
+                        <h3>Eco-Friendly</h3>
+                        <p>Sustainable practices that reduce waste and environmental impact.</p>
+                    </div>
+                    <div class="hub-feature">
+                        <h3>24/7 Support</h3>
+                        <p>Always online. Always ready to help if an emergency strikes.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <img class="hub-center-img" src="https://placehold.co/400x700/1e293b/FFF?text=Product+Focus" alt="Centerpiece">
+                </div>
+
+                <div class="hub-col right">
+                    <div class="hub-feature">
+                        <h3>Latest Tech</h3>
+                        <p>We utilize the latest diagnostic tools for accurate results.</p>
+                    </div>
+                    <div class="hub-feature">
+                        <h3>Safety First</h3>
+                        <p>Zero-harm policy with strict OHS compliance on every site.</p>
+                    </div>
+                    <div class="hub-feature">
+                        <h3>Warranty</h3>
+                        <p>10-year workmanship guarantee on all structural work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--light);">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>2.5k</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Client Satisfaction</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24h</h3>
+                    <p>Response Time</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Why Us?</h2>
+                <p>A comprehensive checklist of our service standards.</p>
+            </div>
+            <div class="dense-grid">
+                <div class="dense-card">
+                    <div style="color: var(--primary);">★</div>
+                    <h3>Top Rated</h3>
+                    <p>Voted #1 in the region for three years running.</p>
+                </div>
+                <div class="dense-card">
+                    <div style="color: var(--primary);">⏱</div>
+                    <h3>Punctual</h3>
+                    <p>We arrive on time, or we pay you for the wait.</p>
+                </div>
+                <div class="dense-card">
+                    <div style="color: var(--primary);">🧹</div>
+                    <h3>Tidy</h3>
+                    <p>We leave your space cleaner than we found it.</p>
+                </div>
+                <div class="dense-card">
+                    <div style="color: var(--primary);">📜</div>
+                    <h3>Certified</h3>
+                    <p>Master Builders Association active members.</p>
+                </div>
+                <div class="dense-card">
+                    <div style="color: var(--primary);">🔒</div>
+                    <h3>Secure</h3>
+                    <p>All staff are police-checked and vetted.</p>
+                </div>
+                 <div class="dense-card">
+                    <div style="color: var(--primary);">🤝</div>
+                    <h3>Friendly</h3>
+                    <p>Professional service with a smile, guaranteed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--light);">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07</span>
+                <h2>Compare the Market</h2>
+                <p>See how we stack up against the "cheap" competition.</p>
+            </div>
+            
+            <div class="comparison-wrapper">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Features</th>
+                            <th class="us-col">Our Company</th>
+                            <th style="width: 30%;">Typical Competitor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Workmanship Warranty</strong></td>
+                            <td class="us-col"><span class="icon-check">✓</span> 10 Years</td>
+                            <td><span class="icon-cross">✗</span> 1 Year (or none)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fixed Price Quotes</strong></td>
+                            <td class="us-col"><span class="icon-check">✓</span> Always</td>
+                            <td><span class="icon-cross">✗</span> Hourly estimates</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Qualified Trades</strong></td>
+                            <td class="us-col"><span class="icon-check">✓</span> 100% Certified</td>
+                            <td><span class="icon-cross">✗</span> Apprentices/Unlicensed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Insurance Coverage</strong></td>
+                            <td class="us-col"><span class="icon-check">✓</span> $20M Public Liability</td>
+                            <td><span class="icon-cross">✗</span> Minimum Required</td>
+                        </tr>
+                        <tr style="border-bottom: none;">
+                            <td><strong>Cleanup Service</strong></td>
+                            <td class="us-col" style="border-bottom: none;"><span class="icon-check">✓</span> Included</td>
+                            <td style="border-bottom: none;"><span class="icon-cross">✗</span> Extra Charge</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>Explore Values</h2>
+                <p>Hover over a tile to reveal the details. (Clean/Minimal)</p>
+            </div>
+            <div class="tile-grid">
+                <div class="tile-item">
+                    <div class="tile-icon">🎯</div>
+                    <h3>Precision</h3>
+                    <p>Laser-focused attention to detail in every measurement.</p>
+                </div>
+                <div class="tile-item">
+                    <div class="tile-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Using modern methods to save you time and money.</p>
+                </div>
+                <div class="tile-item">
+                    <div class="tile-icon">♻️</div>
+                    <h3>Green</h3>
+                    <p>Environmentally conscious disposal and materials.</p>
+                </div>
+                <div class="tile-item">
+                    <div class="tile-icon">🤝</div>
+                    <h3>Respect</h3>
+                    <p>We treat your home as if it were our own.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-section">
+        <div class="glass-overlay"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="section-intro">
+                <span class="subtitle" style="color: #60a5fa;">Layout 09</span>
+                <h2 style="color: white;">Premium Guarantee</h2>
+                <p style="color: #cbd5e1;">A dark, textured layout for high-end branding.</p>
+            </div>
+            
+            <div class="glass-grid">
+                <div class="glass-card">
+                    <h3>Money Back</h3>
+                    <p style="margin-top: 0.5rem;">If you aren't completely satisfied with the initial stage, we refund your deposit immediately.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>Lifetime Support</h3>
+                    <p style="margin-top: 0.5rem;">We don't disappear after the job. We offer lifetime support for all our installations.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>Dedicated Manager</h3>
+                    <p style="margin-top: 0.5rem;">One point of contact who knows your project inside and out.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

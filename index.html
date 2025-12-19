@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Library</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .template-list {
+            padding: 2rem 0;
+        }
+
+        .template-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--dark);
+            transition: all 0.15s ease;
+        }
+
+        .template-link:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .template-link:hover {
+            padding-left: 0.5rem;
+            color: var(--primary);
+        }
+
+        .template-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .template-desc {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .template-arrow {
+            color: var(--gray);
+            font-size: 1.25rem;
+            transition: transform 0.15s ease;
+        }
+
+        .template-link:hover .template-arrow {
+            transform: translateX(4px);
+            color: var(--primary);
+        }
+
+        .count {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>Template Library</h1>
+            <p>Click any template to preview</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="template-list">
+
+            <a href="hero.html" class="template-link">
+                <div>
+                    <div class="template-name">Hero Sections</div>
+                    <div class="template-desc">16 hero layouts — split, centered, video, diagonal</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="about-us.html" class="template-link">
+                <div>
+                    <div class="template-name">About Us</div>
+                    <div class="template-desc">Team intros, company history, mission statements</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="service-section.html" class="template-link">
+                <div>
+                    <div class="template-name">Services</div>
+                    <div class="template-desc">Feature grids, service cards, capability showcases</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="projects.html" class="template-link">
+                <div>
+                    <div class="template-name">Portfolio & Projects</div>
+                    <div class="template-desc">10 layouts — masonry, cards, case studies, hover reveals</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="testimonials.html" class="template-link">
+                <div>
+                    <div class="template-name">Testimonials</div>
+                    <div class="template-desc">Quotes, ratings, client logos, review carousels</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="faq.html" class="template-link">
+                <div>
+                    <div class="template-name">FAQ</div>
+                    <div class="template-desc">Accordions, categorized questions, help center</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="contact.html" class="template-link">
+                <div>
+                    <div class="template-name">Contact</div>
+                    <div class="template-desc">Forms, maps, office details, booking interfaces</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="pricing.html" class="template-link">
+                <div>
+                    <div class="template-name">Pricing</div>
+                    <div class="template-desc">8 layouts — comparison tables, toggles, tiers</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="process.html" class="template-link">
+                <div>
+                    <div class="template-name">Process</div>
+                    <div class="template-desc">9 layouts — timelines, steps, cycles, tabs</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="cta-strips.html" class="template-link">
+                <div>
+                    <div class="template-name">CTA Strips</div>
+                    <div class="template-desc">9 layouts — banners, newsletters, split CTAs</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="footer.html" class="template-link">
+                <div>
+                    <div class="template-name">Footers</div>
+                    <div class="template-desc">8 layouts — mega footer, minimal, bento, trade</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="before-after.html" class="template-link">
+                <div>
+                    <div class="template-name">Before & After</div>
+                    <div class="template-desc">8 layouts — sliders, hover reveals, case studies</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="why-choose.html" class="template-link">
+                <div>
+                    <div class="template-name">Why Choose Us / Features</div>
+                    <div class="template-desc">9 layouts — benefits, stats, comparison tables</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="trust.html" class="template-link">
+                <div>
+                    <div class="template-name">Trust & Certifications</div>
+                    <div class="template-desc">9 layouts — badges, credentials, verification</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+            <a href="service-areas.html" class="template-link">
+                <div>
+                    <div class="template-name">Service Areas</div>
+                    <div class="template-desc">9 layouts — maps, regions, postcode lookup</div>
+                </div>
+                <span class="template-arrow">→</span>
+            </a>
+
+        </div>
+
+        <p class="count">15 templates</p>
+    </main>
+
+</body>
+</html>

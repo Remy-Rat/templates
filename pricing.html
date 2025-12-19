@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Section Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (Matched to Service Master) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981; /* Added for checkmarks */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        .center-intro { text-align: center; margin-left: auto; margin-right: auto; }
+
+        /* Button Utilities */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--dark); }
+        .btn-outline:hover { border-color: var(--dark); background: var(--light); }
+        .btn-white { background: white; color: var(--dark); }
+        .btn-white:hover { background: #f1f5f9; }
+
+        /* =========================================
+           PRICING SPECIFIC COMPONENTS
+           ========================================= */
+        
+        .price-card {
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        .price-header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+        .price-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .price-amount { font-size: 3rem; font-weight: 800; color: var(--dark); line-height: 1; }
+        .price-period { color: var(--gray); font-size: 1rem; font-weight: 400; }
+        .price-desc { color: var(--gray); margin-top: 1rem; font-size: 0.95rem; }
+
+        .feature-list { list-style: none; margin-bottom: 2.5rem; flex-grow: 1; }
+        .feature-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--gray); }
+        .check-icon { color: var(--primary); font-weight: bold; min-width: 20px; }
+        .check-icon.success { color: var(--success); }
+        .cross-icon { color: #cbd5e1; }
+
+        /* Badge for "Popular" cards */
+        .popular-tag {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* --- LAYOUT 1: THE COMPARISON (CLASSIC 3-COL) --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .card-highlight {
+            border: 2px solid var(--primary);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.1);
+            position: relative;
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        
+        .card-highlight:hover { transform: scale(1.05) translateY(-5px); }
+
+        @media (max-width: 900px) {
+            .card-highlight { transform: none; }
+            .card-highlight:hover { transform: translateY(-5px); }
+        }
+
+        /* --- LAYOUT 2: THE TOGGLE (MONTHLY/YEARLY) --- */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .toggle-label { font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: color 0.3s; }
+        .toggle-label.active { color: var(--primary); }
+        .toggle-label.inactive { color: var(--gray); }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* Hiding/Showing Prices via JS Class */
+        .bill-monthly .price-yearly-text { display: none; }
+        .bill-yearly .price-monthly-text { display: none; }
+        
+        .save-badge {
+            background: #dcfce7; color: #166534; font-size: 0.75rem; padding: 2px 8px; border-radius: 100px; font-weight: 700;
+        }
+
+        /* --- LAYOUT 3: FEATURE CHECKLIST (MATRIX) --- */
+        .matrix-container {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .matrix-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+        
+        .matrix-row:last-child { border-bottom: none; }
+        .matrix-header { background: #f8fafc; font-weight: 700; }
+        .matrix-row:hover:not(.matrix-header) { background: #f8fafc; }
+        
+        .col-center { text-align: center; justify-content: center; display: flex; }
+        .feature-name { font-weight: 600; color: var(--dark); }
+        .feature-desc { font-size: 0.85rem; color: var(--gray); font-weight: 400; display: block; margin-top: 0.25rem; }
+
+        @media (max-width: 768px) {
+            .matrix-container { overflow-x: auto; }
+            .matrix-row { min-width: 600px; }
+        }
+
+        /* --- LAYOUT 4: SINGLE TIER (HIGH TICKET) --- */
+        .single-tier-card {
+            background: var(--dark);
+            color: white;
+            border-radius: 20px;
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .single-tier-content h3 { color: white; margin-bottom: 1rem; font-size: 2rem; }
+        .single-tier-content p { color: #94a3b8; margin-bottom: 2rem; }
+        
+        .single-tier-price {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.2;
+            top: -100px; right: -100px;
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .single-tier-card { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
+        }
+
+        /* --- LAYOUT 5: SPLIT SCREEN (SIDE BY SIDE) --- */
+        .split-pricing {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .split-content ul { list-style: none; margin: 2rem 0; }
+        .split-content li { margin-bottom: 1rem; display: flex; gap: 1rem; color: var(--gray); }
+
+        @media (max-width: 768px) {
+            .split-pricing { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* --- LAYOUT 6: "SWISS" MINIMALIST --- */
+        .swiss-grid {
+            border-top: 2px solid var(--dark);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .swiss-card {
+            padding: 3rem 2rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+        
+        .swiss-card:hover { background: #f8fafc; }
+        .swiss-header { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .swiss-price { font-size: 1.25rem; font-family: monospace; color: var(--gray); margin-bottom: 2rem; display: block;}
+
+        /* --- LAYOUT 7: ADD-ON MODULES --- */
+        .addon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .addon-card {
+            border: 1px dashed #cbd5e1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .addon-head { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; }
+        .addon-price { font-weight: 700; background: white; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); font-size: 0.9rem;}
+
+    </style>
+</head>
+<body class="bill-monthly">     <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="service-section.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Services</a>
+            <a href="faq.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">FAQ</a>
+            <a href="pricing.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Pricing</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Pricing Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">Revenue optimized layouts</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro center-intro">
+                <span class="subtitle">Layout 01</span>
+                <h2>Compare Plans</h2>
+                <p>Standard 3-column layout highlighting the best value option.</p>
+            </div>
+            
+            <div class="grid-3" style="margin-top: 3rem;">
+                <article class="price-card">
+                    <div class="price-header">
+                        <h3 class="price-name">Starter</h3>
+                        <div class="price-amount">$29</div>
+                        <span class="price-period">per month</span>
+                        <p class="price-desc">Perfect for small businesses just getting started online.</p>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> 5 Projects</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Basic Analytics</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> 24/7 Support</li>
+                        <li class="feature-item"><span class="cross-icon">×</span> <s>Custom Domain</s></li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Choose Starter</a>
+                </article>
+
+                <article class="price-card card-highlight">
+                    <span class="popular-tag">Most Popular</span>
+                    <div class="price-header">
+                        <h3 class="price-name">Professional</h3>
+                        <div class="price-amount">$99</div>
+                        <span class="price-period">per month</span>
+                        <p class="price-desc">Everything you need to scale your business operations.</p>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> Unlimited Projects</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Advanced Analytics</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Priority Support</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Custom Domain</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Choose Professional</a>
+                </article>
+
+                <article class="price-card">
+                    <div class="price-header">
+                        <h3 class="price-name">Enterprise</h3>
+                        <div class="price-amount">$299</div>
+                        <span class="price-period">per month</span>
+                        <p class="price-desc">Dedicated infrastructure for high-volume demands.</p>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> Everything in Pro</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Dedicated Server</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Account Manager</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> SLA Guarantee</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Contact Sales</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro center-intro">
+                <span class="subtitle">Layout 02</span>
+                <h2>Flexible Billing</h2>
+                <p>Toggle between monthly and yearly pricing to show savings.</p>
+            </div>
+
+            <div class="toggle-container">
+                <span class="toggle-label active" id="label-monthly">Monthly</span>
+                <label class="switch">
+                    <input type="checkbox" id="billing-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label inactive" id="label-yearly">Yearly <span class="save-badge">Save 20%</span></span>
+            </div>
+
+            <div class="grid-3">
+                <article class="price-card">
+                    <div class="price-header">
+                        <h3 class="price-name">Freelancer</h3>
+                        <div class="price-amount">
+                            <span class="price-monthly-text">$19</span>
+                            <span class="price-yearly-text">$15</span>
+                        </div>
+                        <span class="price-period">per user / month</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> All basic features</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> 10GB Storage</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </article>
+                
+                <article class="price-card">
+                    <div class="price-header">
+                        <h3 class="price-name">Agency</h3>
+                        <div class="price-amount">
+                            <span class="price-monthly-text">$49</span>
+                            <span class="price-yearly-text">$39</span>
+                        </div>
+                        <span class="price-period">per user / month</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> Client Portal</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> White-labeling</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Get Started</a>
+                </article>
+
+                <article class="price-card">
+                    <div class="price-header">
+                        <h3 class="price-name">Corporation</h3>
+                        <div class="price-amount">
+                            <span class="price-monthly-text">$99</span>
+                            <span class="price-yearly-text">$79</span>
+                        </div>
+                        <span class="price-period">per user / month</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="check-icon">✓</span> SSO / SAML</li>
+                        <li class="feature-item"><span class="check-icon">✓</span> Audit Logs</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Get Started</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03</span>
+                <h2>Detailed Breakdown</h2>
+                <p>A matrix layout for when the devil is in the details.</p>
+            </div>
+
+            <div class="matrix-container">
+                <div class="matrix-row matrix-header">
+                    <div>Features</div>
+                    <div class="col-center">Basic</div>
+                    <div class="col-center" style="color: var(--primary);">Growth</div>
+                    <div class="col-center">Scale</div>
+                </div>
+                
+                <div class="matrix-row">
+                    <div>
+                        <span class="feature-name">User Accounts</span>
+                        <span class="feature-desc">Number of team members allowed</span>
+                    </div>
+                    <div class="col-center">Up to 2</div>
+                    <div class="col-center">Up to 10</div>
+                    <div class="col-center">Unlimited</div>
+                </div>
+
+                <div class="matrix-row">
+                    <div>
+                        <span class="feature-name">Storage</span>
+                        <span class="feature-desc">Cloud file storage capacity</span>
+                    </div>
+                    <div class="col-center">5 GB</div>
+                    <div class="col-center">50 GB</div>
+                    <div class="col-center">1 TB</div>
+                </div>
+
+                <div class="matrix-row">
+                    <div>
+                        <span class="feature-name">API Access</span>
+                        <span class="feature-desc">Connect external tools</span>
+                    </div>
+                    <div class="col-center"><span class="cross-icon">×</span></div>
+                    <div class="col-center"><span class="check-icon success">✓</span></div>
+                    <div class="col-center"><span class="check-icon success">✓</span></div>
+                </div>
+
+                <div class="matrix-row">
+                    <div>
+                        <span class="feature-name">Phone Support</span>
+                        <span class="feature-desc">Direct line to our engineers</span>
+                    </div>
+                    <div class="col-center"><span class="cross-icon">×</span></div>
+                    <div class="col-center"><span class="cross-icon">×</span></div>
+                    <div class="col-center"><span class="check-icon success">✓</span></div>
+                </div>
+
+                <div class="matrix-row">
+                    <div></div>
+                    <div class="col-center"><a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Select</a></div>
+                    <div class="col-center"><a href="#" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Select</a></div>
+                    <div class="col-center"><a href="#" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Select</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #111;">
+        <div class="container">
+            <div class="single-tier-card">
+                <div class="glow-effect"></div>
+                <div class="single-tier-content" style="position: relative; z-index: 1;">
+                    <span class="subtitle" style="margin-bottom: 1rem;">All-In-One Access</span>
+                    <h3>The Lifetime Pass</h3>
+                    <p>Stop paying monthly subscriptions. Get full access to our entire library of resources, tools, and support channels for a single one-time payment.</p>
+                    
+                    <ul class="feature-list" style="color: white;">
+                        <li class="feature-item" style="color: #cbd5e1;"><span class="check-icon success">✓</span> Unlimited downloads forever</li>
+                        <li class="feature-item" style="color: #cbd5e1;"><span class="check-icon success">✓</span> Access to private community</li>
+                        <li class="feature-item" style="color: #cbd5e1;"><span class="check-icon success">✓</span> Early access to new features</li>
+                        <li class="feature-item" style="color: #cbd5e1;"><span class="check-icon success">✓</span> Commercial usage license</li>
+                    </ul>
+                </div>
+                
+                <div class="single-tier-price" style="position: relative; z-index: 1; align-self: center;">
+                    <div style="font-size: 1rem; color: #94a3b8; text-decoration: line-through; margin-bottom: 0.5rem;">$1,999</div>
+                    <div style="font-size: 4rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem;">$499</div>
+                    <div style="color: #38bdf8; font-weight: 600; margin-bottom: 2rem;">One-time payment</div>
+                    <a href="#" class="btn btn-primary">Secure Access Now</a>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">30-day money back guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="split-pricing">
+                <div class="split-content">
+                    <span class="subtitle">Layout 05</span>
+                    <h2>Simple pricing for simple needs.</h2>
+                    <p style="color: var(--gray); margin-top: 1rem;">We don't believe in complicating things. One plan, one price, everything included. Cancel anytime.</p>
+                    
+                    <ul>
+                        <li>
+                            <div class="icon-box" style="width: 24px; height: 24px; font-size: 12px; margin: 0;">✓</div>
+                            <span>No hidden setup fees</span>
+                        </li>
+                        <li>
+                            <div class="icon-box" style="width: 24px; height: 24px; font-size: 12px; margin: 0;">✓</div>
+                            <span>Export your data anytime</span>
+                        </li>
+                        <li>
+                            <div class="icon-box" style="width: 24px; height: 24px; font-size: 12px; margin: 0;">✓</div>
+                            <span>Free concierge onboarding</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="price-card" style="border-top: 4px solid var(--primary);">
+                    <div class="price-header" style="text-align: center; border: none; padding-bottom: 0;">
+                        <h3 class="price-name">Membership</h3>
+                        <div class="price-amount">$49</div>
+                        <span class="price-period">/ month</span>
+                    </div>
+                    <div style="margin: 2rem 0;">
+                        <a href="#" class="btn btn-primary">Start Free Trial</a>
+                        <p style="text-align: center; font-size: 0.8rem; color: var(--gray); margin-top: 1rem;">No credit card required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Swiss Grid</h2>
+                <p>Minimalist layout focused on typography and hierarchy.</p>
+            </div>
+
+            <div class="swiss-grid">
+                <div class="swiss-card">
+                    <div class="swiss-header">Consultation</div>
+                    <span class="swiss-price">$150 / hr</span>
+                    <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 2rem;">One-on-one strategic advice via Zoom.</p>
+                    <a href="#" style="text-decoration: underline; color: var(--dark); font-weight: 700; font-size: 0.9rem;">Book Now &rarr;</a>
+                </div>
+
+                <div class="swiss-card">
+                    <div class="swiss-header">Project Basis</div>
+                    <span class="swiss-price">From $2,500</span>
+                    <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 2rem;">Full scope execution for defined deliverables.</p>
+                    <a href="#" style="text-decoration: underline; color: var(--dark); font-weight: 700; font-size: 0.9rem;">Get Quote &rarr;</a>
+                </div>
+
+                <div class="swiss-card">
+                    <div class="swiss-header">Retainer</div>
+                    <span class="swiss-price">$5,000 / mo</span>
+                    <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 2rem;">Ongoing dedicated support for your team.</p>
+                    <a href="#" style="text-decoration: underline; color: var(--dark); font-weight: 700; font-size: 0.9rem;">Inquire &rarr;</a>
+                </div>
+                 <div class="swiss-card" style="background: var(--dark); color: white;">
+                    <div class="swiss-header">Custom</div>
+                    <span class="swiss-price" style="color: #94a3b8;">Contact Us</span>
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem;">Bespoke solutions for enterprise needs.</p>
+                    <a href="#" style="text-decoration: underline; color: white; font-weight: 700; font-size: 0.9rem;">Talk to Sales &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07</span>
+                <h2>Build Your Bundle</h2>
+                <p>Start with the core, add what you need.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+                <div class="price-card" style="border-color: var(--primary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 class="price-name" style="margin: 0;">Core Platform</h3>
+                        <div class="price-amount" style="font-size: 2rem;">$29</div>
+                    </div>
+                    <p class="price-desc" style="margin-top: 0;">Includes hosting, basic support, and CMS access.</p>
+                </div>
+
+                <div style="grid-row: span 2; background: var(--light); padding: 2rem; border-radius: 12px;">
+                    <h4 style="margin-bottom: 1rem;">Estimated Total</h4>
+                    <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">$44<span style="font-size: 1rem; color: var(--gray); font-weight: 400;">/mo</span></div>
+                    <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+                </div>
+
+                <div class="addon-grid">
+                    <div class="addon-card">
+                        <div>
+                            <div class="addon-head">
+                                <strong>Analytics</strong>
+                                <span class="addon-price">+$15</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray);">Advanced visitor tracking.</p>
+                        </div>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;">Add</button>
+                    </div>
+
+                    <div class="addon-card">
+                        <div>
+                            <div class="addon-head">
+                                <strong>Email</strong>
+                                <span class="addon-price">+$10</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray);">50k emails/mo sending.</p>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;">Added ✓</button>
+                    </div>
+
+                    <div class="addon-card">
+                        <div>
+                            <div class="addon-head">
+                                <strong>Security</strong>
+                                <span class="addon-price">+$25</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray);">DDoS protection.</p>
+                        </div>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;">Add</button>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro center-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>Scalable Solutions</h2>
+            </div>
+
+            <div class="grid-3" style="margin-bottom: 2rem;">
+                <article class="price-card" style="padding: 1.5rem;">
+                    <h3 class="price-name" style="font-size: 1rem;">Basic</h3>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0;">$29</div>
+                    <a href="#" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem;">Sign Up &rarr;</a>
+                </article>
+                <article class="price-card" style="padding: 1.5rem;">
+                    <h3 class="price-name" style="font-size: 1rem;">Pro</h3>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0;">$59</div>
+                    <a href="#" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem;">Sign Up &rarr;</a>
+                </article>
+                <article class="price-card" style="padding: 1.5rem;">
+                    <h3 class="price-name" style="font-size: 1rem;">Team</h3>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0;">$99</div>
+                    <a href="#" style="color: var(--primary); font-weight: 700; text-decoration: none; font-size: 0.9rem;">Sign Up &rarr;</a>
+                </article>
+            </div>
+
+            <div style="background: white; border: 1px solid var(--border); padding: 3rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+                <div style="max-width: 600px;">
+                    <span class="badge" style="background: var(--dark); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Enterprise</span>
+                    <h3 style="margin-top: 1rem;">Need more than 100 seats?</h3>
+                    <p style="color: var(--gray);">We offer volume discounts, custom invoicing, and dedicated onboarding for large organizations.</p>
+                </div>
+                <a href="#" class="btn btn-dark" style="background: var(--dark); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Contact Sales Team</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('billing-toggle');
+            const body = document.body;
+            const labelMonthly = document.getElementById('label-monthly');
+            const labelYearly = document.getElementById('label-yearly');
+
+            toggle.addEventListener('change', () => {
+                if(toggle.checked) {
+                    // Yearly Mode
+                    body.classList.remove('bill-monthly');
+                    body.classList.add('bill-yearly');
+                    labelMonthly.classList.remove('active');
+                    labelMonthly.classList.add('inactive');
+                    labelYearly.classList.remove('inactive');
+                    labelYearly.classList.add('active');
+                } else {
+                    // Monthly Mode
+                    body.classList.remove('bill-yearly');
+                    body.classList.add('bill-monthly');
+                    labelMonthly.classList.remove('inactive');
+                    labelMonthly.classList.add('active');
+                    labelYearly.classList.remove('active');
+                    labelYearly.classList.add('inactive');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

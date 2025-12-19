@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Section Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (From Source) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+
+        /* Container & Section defaults */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Presentation Wrapper (Just for this kit demo) */
+        .demo-wrapper {
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4rem;
+        }
+        
+        .demo-label {
+            background: var(--light);
+            padding: 1rem 2rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            color: var(--gray);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- SHARED FOOTER STYLES --- */
+        footer {
+            width: 100%;
+        }
+
+        .footer-brand { font-size: 1.5rem; font-weight: 800; display: block; margin-bottom: 1rem; color: inherit; text-decoration: none;}
+        .footer-brand span { color: var(--primary); }
+        
+        .footer-desc { max-width: 300px; margin-bottom: 1.5rem; font-size: 0.95rem; opacity: 0.8; }
+        
+        .footer-heading {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            color: inherit;
+        }
+
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { text-decoration: none; color: inherit; opacity: 0.7; transition: opacity 0.2s, color 0.2s; font-size: 0.95rem; }
+        .footer-links a:hover { opacity: 1; color: var(--primary); }
+
+        .social-icons { display: flex; gap: 1rem; }
+        .social-link { 
+            width: 40px; height: 40px; 
+            background: rgba(255,255,255,0.1); 
+            border-radius: 8px; /* Consistent with source radius */
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; color: inherit;
+            transition: background 0.2s;
+        }
+        .social-link:hover { background: var(--primary); color: white; }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            opacity: 0.6;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Inputs & Buttons (Shared) */
+        .f-input-group { display: flex; gap: 0.5rem; }
+        .f-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-family: inherit;
+        }
+        .f-input::placeholder { color: rgba(255,255,255,0.5); }
+        .f-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .f-btn:hover { background: #1d4ed8; }
+
+
+        /* =========================================
+           LAYOUT 1: THE CORPORATE MEGA-FOOTER
+           ========================================= */
+        .footer-corporate {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 0 2rem 0;
+        }
+        
+        .corp-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.25fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .corp-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .corp-grid > div:first-child { grid-column: span 2; }
+        }
+        @media (max-width: 600px) {
+            .corp-grid { grid-template-columns: 1fr; }
+            .corp-grid > div:first-child { grid-column: span 1; }
+        }
+
+        /* =========================================
+           LAYOUT 2: THE CLEAN MINIMALIST
+           ========================================= */
+        .footer-minimal {
+            background: white;
+            color: var(--dark);
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .min-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .min-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .min-links a { color: var(--dark); font-weight: 500; opacity: 0.7; }
+        .min-links a:hover { opacity: 1; color: var(--primary); }
+
+        /* =========================================
+           LAYOUT 3: CTA INTEGRATED (FLOATING CARD)
+           ========================================= */
+        .footer-cta-wrap {
+            background: var(--dark);
+            color: white;
+            padding-top: 8rem; /* Space for the floating card */
+            padding-bottom: 2rem;
+            position: relative;
+            margin-top: 6rem; /* Push down from previous content */
+        }
+
+        .cta-card {
+            background: var(--primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: -5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 4rem);
+            max-width: 1200px;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+        }
+
+        .cta-text h2 { font-size: 2rem; margin-bottom: 0.5rem; color: white;}
+        .cta-text p { opacity: 0.9; }
+        
+        .cta-btn-white {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .footer-cta-wrap { padding-top: 10rem; }
+            .cta-card { flex-direction: column; text-align: center; gap: 1.5rem; padding: 2rem; }
+        }
+
+        /* =========================================
+           LAYOUT 4: THE BIG TYPOGRAPHY
+           ========================================= */
+        .footer-big-type {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 0 1rem 0;
+            overflow: hidden;
+        }
+
+        .big-title {
+            font-size: 12vw; /* Responsive huge text */
+            line-height: 0.9;
+            font-weight: 900;
+            color: rgba(255,255,255,0.05); /* Very subtle */
+            white-space: nowrap;
+            margin-bottom: -2rem; /* Pull it closer */
+            display: block;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        .big-type-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .big-type-content { flex-direction: column; gap: 3rem; }
+        }
+
+        /* =========================================
+           LAYOUT 5: THE NEWSLETTER FOCUS
+           ========================================= */
+        .footer-news {
+            background: #f1f5f9; /* Slate 100 */
+            color: var(--dark);
+            padding: 5rem 0 2rem 0;
+        }
+
+        .news-top {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .news-input-wrap {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .news-input-wrap input {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--dark);
+        }
+
+        .news-grid {
+            border-top: 1px solid #cbd5e1;
+            padding-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        /* =========================================
+           LAYOUT 6: THE BENTO FOOTER
+           ========================================= */
+        .footer-bento {
+            padding: 2rem 0;
+            background: #fff;
+        }
+        
+        .bento-f-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        .bento-f-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 20px; /* Matching source bento radius */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bf-large { grid-column: span 2; background: var(--dark); color: white; }
+        .bf-tall { grid-row: span 2; background: var(--primary); color: white; }
+        
+        .bf-large h3 { font-size: 2rem; margin-bottom: 1rem; }
+        .bf-tall h3 { font-size: 2rem; }
+
+        @media (max-width: 768px) {
+            .bento-f-grid { grid-template-columns: 1fr; }
+            .bf-large, .bf-tall { grid-column: span 1; grid-row: span 1; }
+        }
+
+        /* =========================================
+           LAYOUT 7: THE "TRADE" UTILITY FOOTER
+           ========================================= */
+        .footer-trade {
+            background: #0f172a; /* Darker slate */
+            color: #94a3b8; /* Muted text */
+            padding: 4rem 0 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .trade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-areas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .area-tag {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+        }
+
+        .license-block {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* =========================================
+           LAYOUT 8: SIDEBAR / SPLIT FOOTER
+           ========================================= */
+        .footer-split {
+            background: var(--light);
+            border-top: 1px solid var(--border);
+            padding: 5rem 0;
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .split-left {
+            position: sticky; /* Sticky feature */
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .split-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .split-layout { grid-template-columns: 1fr; }
+            .split-left { position: static; margin-bottom: 3rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Contact</a>
+            <a href="cta-strips.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">CTA Strips</a>
+            <a href="footer.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Footer</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Footer Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">8 Professional Footer Variations</p>
+    </div>
+
+    <div class="demo-label"><div class="container">01. The Corporate Mega-Footer</div></div>
+    <div class="demo-wrapper" style="padding-bottom: 0; margin-bottom: 0;">
+        <footer class="footer-corporate">
+            <div class="container">
+                <div class="corp-grid">
+                    <div>
+                        <a href="#" class="footer-brand">Your<span>Brand</span></a>
+                        <p class="footer-desc">We build digital products that help businesses grow. Trusted by over 500 companies worldwide.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-link">𝕏</a>
+                            <a href="#" class="social-link">in</a>
+                            <a href="#" class="social-link">Ig</a>
+                            <a href="#" class="social-link">Fb</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading">Services</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Web Development</a></li>
+                            <li><a href="#">App Design</a></li>
+                            <li><a href="#">Cloud Hosting</a></li>
+                            <li><a href="#">Consultancy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading">Company</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading">Subscribe</h4>
+                        <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 1rem;">Join our newsletter for the latest updates.</p>
+                        <div class="f-input-group">
+                            <input type="email" placeholder="Email" class="f-input">
+                            <button class="f-btn">→</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; 2024 YourBrand Inc. All rights reserved.</span>
+                    <div style="display: flex; gap: 1.5rem;">
+                        <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
+                        <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">02. The Clean Minimalist</div></div>
+    <div class="demo-wrapper">
+        <footer class="footer-minimal">
+            <div class="container">
+                <div class="min-content">
+                    <a href="#" class="footer-brand" style="color: var(--dark);">Your<span>Brand</span></a>
+                    <ul class="min-links">
+                        <li><a href="#">Work</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                    <div class="social-icons" style="margin-top: 0.5rem;">
+                        <a href="#" class="social-link" style="color: var(--dark); background: var(--light);">Ig</a>
+                        <a href="#" class="social-link" style="color: var(--dark); background: var(--light);">Tw</a>
+                        <a href="#" class="social-link" style="color: var(--dark); background: var(--light);">In</a>
+                    </div>
+                    <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--gray);">&copy; 2024 YourBrand. Melbourne, Australia.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">03. CTA Integrated (Floating Card)</div></div>
+    <div class="demo-wrapper" style="padding-bottom: 0; border: none; background: #f8fafc;">
+        <footer class="footer-cta-wrap">
+            <div class="container">
+                <div class="cta-card">
+                    <div class="cta-text">
+                        <h2>Ready to start a project?</h2>
+                        <p>Let's build something amazing together.</p>
+                    </div>
+                    <a href="#" class="cta-btn-white">Get a Quote</a>
+                </div>
+
+                <div class="corp-grid">
+                    <div>
+                        <a href="#" class="footer-brand">Your<span>Brand</span></a>
+                        <p class="footer-desc">Professional solutions for growing businesses.</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading">Menu</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Services</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading">Legal</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Terms</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                         <h4 class="footer-heading">Contact</h4>
+                         <ul class="footer-links">
+                             <li>hello@yourbrand.com</li>
+                             <li>+61 400 000 000</li>
+                         </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; 2024 YourBrand.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">04. Big Typography (Modern)</div></div>
+    <div class="demo-wrapper" style="padding-bottom: 0;">
+        <footer class="footer-big-type">
+            <div class="container">
+                <div class="big-type-content">
+                    <div>
+                        <a href="#" class="footer-brand">Your<span>Brand</span></a>
+                        <ul class="footer-links" style="margin-top: 2rem;">
+                            <li><a href="#">instagram.com/brand</a></li>
+                            <li><a href="#">twitter.com/brand</a></li>
+                        </ul>
+                    </div>
+                    <div style="text-align: right;">
+                        <h4 class="footer-heading">Main Office</h4>
+                        <p style="opacity: 0.7;">123 Innovation Drive<br>Melbourne, VIC 3000</p>
+                        <a href="mailto:hello@site.com" style="display: inline-block; margin-top: 1rem; color: var(--primary); text-decoration: none; font-weight: 700;">hello@yourbrand.com</a>
+                    </div>
+                </div>
+            </div>
+            <span class="big-title">LET'S TALK</span>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">05. The Newsletter Focus</div></div>
+    <div class="demo-wrapper" style="padding-bottom: 0;">
+        <footer class="footer-news">
+            <div class="container">
+                <div class="news-top">
+                    <div style="width: 50px; height: 50px; background: #dbeafe; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">✉️</div>
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Stay in the loop</h2>
+                    <p style="color: var(--gray);">Get the latest updates, articles, and resources sent straight to your inbox weekly.</p>
+                    <div class="news-input-wrap">
+                        <input type="email" placeholder="Enter your email" class="f-input">
+                        <button class="f-btn">Subscribe</button>
+                    </div>
+                </div>
+
+                <div class="news-grid">
+                    <div>
+                        <a href="#" class="footer-brand" style="color: var(--dark); font-size: 1.25rem;">Your<span>Brand</span></a>
+                        <p style="font-size: 0.85rem; color: var(--gray);">&copy; 2024</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading" style="color: var(--dark);">Product</h4>
+                        <ul class="footer-links">
+                            <li><a href="#" style="color: var(--gray);">Overview</a></li>
+                            <li><a href="#" style="color: var(--gray);">Features</a></li>
+                            <li><a href="#" style="color: var(--gray);">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading" style="color: var(--dark);">Resources</h4>
+                        <ul class="footer-links">
+                            <li><a href="#" style="color: var(--gray);">Blog</a></li>
+                            <li><a href="#" style="color: var(--gray);">Help Center</a></li>
+                            <li><a href="#" style="color: var(--gray);">Guides</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-heading" style="color: var(--dark);">Legal</h4>
+                        <ul class="footer-links">
+                            <li><a href="#" style="color: var(--gray);">Terms</a></li>
+                            <li><a href="#" style="color: var(--gray);">Privacy</a></li>
+                            <li><a href="#" style="color: var(--gray);">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">06. The Bento Footer</div></div>
+    <div class="demo-wrapper" style="background: #f1f5f9;">
+        <div class="container">
+            <footer class="footer-bento">
+                <div class="bento-f-grid">
+                    <div class="bento-f-card bf-large">
+                        <div>
+                            <span style="font-size: 1.5rem;">✨</span>
+                            <h3>YourBrand.</h3>
+                        </div>
+                        <p style="opacity: 0.8;">Creating digital experiences that matter.</p>
+                    </div>
+
+                    <div class="bento-f-card bf-tall">
+                        <div style="margin-bottom: 2rem;">
+                            <h4>Start a Project</h4>
+                            <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.5rem;">Have an idea? Let's discuss.</p>
+                        </div>
+                        <h3>Get in touch &rarr;</h3>
+                    </div>
+
+                    <div class="bento-f-card" style="background: white; border: 1px solid var(--border);">
+                        <h4 style="margin-bottom: 1rem;">Socials</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-link" style="background: #f1f5f9; color: var(--dark);">Ig</a>
+                            <a href="#" class="social-link" style="background: #f1f5f9; color: var(--dark);">Tw</a>
+                        </div>
+                    </div>
+
+                    <div class="bento-f-card" style="background: white; border: 1px solid var(--border);">
+                        <ul class="footer-links">
+                            <li><a href="#" style="color: var(--dark);">Services</a></li>
+                            <li><a href="#" style="color: var(--dark);">Work</a></li>
+                            <li><a href="#" style="color: var(--dark);">About</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="bento-f-card" style="background: #e2e8f0;">
+                        <span style="font-size: 0.8rem; color: var(--gray);">&copy; 2024 YourBrand.</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="demo-label"><div class="container">07. The Trade Utility (Best for Contractors)</div></div>
+    <div class="demo-wrapper" style="padding-bottom: 0; background: #0f172a;">
+        <footer class="footer-trade">
+            <div class="container">
+                <div class="trade-header">
+                    <div>
+                        <h2 style="color: white; font-size: 1.75rem;">Need a quote?</h2>
+                        <p style="margin-top: 0.5rem;">Call us today for a free on-site estimation.</p>
+                    </div>
+                    <a href="#" class="f-btn">0400 123 456</a>
+                </div>
+
+                <div class="corp-grid">
+                    <div>
+                        <h4 class="footer-heading" style="color: white;">Service Areas</h4>
+                        <p>Proudly serving the Greater Melbourne area.</p>
+                        <div class="service-areas">
+                            <span class="area-tag">Richmond</span>
+                            <span class="area-tag">South Yarra</span>
+                            <span class="area-tag">Fitzroy</span>
+                            <span class="area-tag">St Kilda</span>
+                            <span class="area-tag">Brunswick</span>
+                            <span class="area-tag">Toorak</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="footer-heading" style="color: white;">Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Residential Services</a></li>
+                            <li><a href="#">Commercial Services</a></li>
+                            <li><a href="#">Emergency 24/7</a></li>
+                            <li><a href="#">Project Gallery</a></li>
+                        </ul>
+                    </div>
+
+                    <div style="grid-column: span 2;">
+                        <h4 class="footer-heading" style="color: white;">Accreditations</h4>
+                        <div style="display: flex; gap: 1rem; opacity: 0.8; margin-bottom: 1rem;">
+                            <div style="width: 80px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                            <div style="width: 80px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                            <div style="width: 80px; height: 50px; background: rgba(255,255,255,0.1);"></div>
+                        </div>
+                        <div class="license-block">
+                            <p><strong>REC:</strong> 12345 | <strong>ABN:</strong> 12 345 678 910</p>
+                            <p>Fully Insured. Satisfaction Guaranteed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <span>&copy; 2024 TradeName Pty Ltd.</span>
+                    <span>Website by <a href="#" style="color: var(--primary); text-decoration: none;">Scale Labs</a></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="demo-label"><div class="container">08. The Sticky Sidebar</div></div>
+    <div class="demo-wrapper">
+        <footer class="footer-split">
+            <div class="container">
+                <div class="split-layout">
+                    <div class="split-left">
+                        <a href="#" class="footer-brand" style="color: var(--dark);">Your<span>Brand</span></a>
+                        <p class="footer-desc" style="color: var(--gray);">Design driven development for startups and established businesses.</p>
+                        <div class="social-icons">
+                            <a href="#" class="social-link" style="color: var(--dark); background: white; border: 1px solid var(--border);">Ig</a>
+                            <a href="#" class="social-link" style="color: var(--dark); background: white; border: 1px solid var(--border);">In</a>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div>
+                            <h4 class="footer-heading" style="color: var(--dark);">Sitemap</h4>
+                            <ul class="footer-links">
+                                <li><a href="#" style="color: var(--gray);">Home</a></li>
+                                <li><a href="#" style="color: var(--gray);">About</a></li>
+                                <li><a href="#" style="color: var(--gray);">Services</a></li>
+                                <li><a href="#" style="color: var(--gray);">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="footer-heading" style="color: var(--dark);">Office</h4>
+                             <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 1rem;">
+                                 Level 5, 123 Street Name<br>
+                                 Melbourne, VIC 3000<br>
+                                 Australia
+                             </p>
+                             <h4 class="footer-heading" style="color: var(--dark); margin-top: 2rem;">Contact</h4>
+                             <p style="color: var(--gray); font-size: 0.95rem;">
+                                 hello@yourbrand.com<br>
+                                 +61 3 9000 0000
+                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom" style="border-top: 1px solid var(--border); color: var(--gray);">
+                    <span>&copy; 2024 YourBrand.</span>
+                    <span>Privacy Policy</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

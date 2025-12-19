@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Section Master Kit</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (MATCHING SOURCE) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); line-height: 1.2; }
+        .section-intro { max-width: 600px; margin-bottom: 4rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        
+        /* Utility */
+        .btn-link { color: var(--primary); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+        .btn-link:hover { text-decoration: underline; }
+
+        /* =========================================
+           PROCESS LAYOUT 1: VERTICAL TIMELINE
+           ========================================= */
+        .timeline-wrap {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* The center line */
+        .timeline-wrap::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--border);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 3rem;
+        }
+
+        /* The circles on the line */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #fff;
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-left { left: 0; text-align: right; }
+        .timeline-right { left: 50%; text-align: left; }
+        .timeline-right::after { left: -10px; }
+
+        .timeline-content {
+            padding: 2rem;
+            background-color: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .step-num { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
+
+        @media (max-width: 768px) {
+            .timeline-wrap::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 21px; }
+            .timeline-left { text-align: left; }
+            .timeline-right { left: 0%; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 2: HORIZONTAL NUMBERED CARDS
+           ========================================= */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-card {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .process-card:hover { background: #fff; border-color: var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .big-number {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--border);
+            opacity: 0.5;
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            line-height: 1;
+            z-index: 0;
+            transition: color 0.3s;
+        }
+        
+        .process-card:hover .big-number { color: #eff6ff; opacity: 1; }
+        .process-card-content { position: relative; z-index: 1; }
+
+        /* =========================================
+           PROCESS LAYOUT 3: ZIG-ZAG CONNECT
+           ========================================= */
+        .zigzag-process-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .zigzag-process-item:last-child { margin-bottom: 0; }
+        .zigzag-process-item:nth-child(even) .zigzag-text { order: 2; }
+        .zigzag-process-item:nth-child(even) .zigzag-img { order: 1; }
+
+        .zigzag-img img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: var(--dark);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .zigzag-process-item { grid-template-columns: 1fr; gap: 2rem; }
+            .zigzag-process-item:nth-child(even) .zigzag-text { order: 1; }
+            .zigzag-process-item:nth-child(even) .zigzag-img { order: 2; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 4: CIRCULAR CYCLE (AGILE)
+           ========================================= */
+        .cycle-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        /* Decorative arrows for desktop */
+        @media (min-width: 900px) {
+            .cycle-arrow {
+                position: absolute;
+                top: 50%;
+                font-size: 2rem;
+                color: var(--primary);
+                opacity: 0.3;
+                z-index: 0;
+            }
+            .arrow-1 { left: 31%; }
+            .arrow-2 { left: 65%; }
+        }
+
+        .cycle-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 100%; /* Circle shape */
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
+            background: white;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .cycle-card:hover { transform: scale(1.05); border-color: var(--primary); }
+        .cycle-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .cycle-card { border-radius: var(--radius-lg); aspect-ratio: auto; }
+            .cycle-arrow { display: none; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 5: STICKY SPLIT
+           ========================================= */
+        .sticky-process {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .sticky-visual {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+        
+        .sticky-visual img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .scroll-step {
+            padding: 3rem;
+            margin-bottom: 2rem;
+            background: var(--light);
+            border-radius: var(--radius-md);
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .scroll-step:hover {
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .sticky-process { grid-template-columns: 1fr; }
+            .sticky-visual { position: static; margin-bottom: 2rem; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 6: CONNECTOR LINE (HORIZONTAL)
+           ========================================= */
+        .connector-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            position: relative;
+        }
+
+        /* The horizontal line */
+        .connector-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .connector-step {
+            position: relative;
+            z-index: 1;
+            padding-right: 1rem;
+        }
+
+        .dot-marker {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 0 8px #fff; /* White halo to hide line */
+        }
+
+        @media (max-width: 900px) {
+            .connector-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+            .connector-wrapper::before {
+                width: 2px;
+                height: 100%;
+                left: 25px;
+                top: 0;
+            }
+            .dot-marker { margin-bottom: 1rem; }
+            .connector-step { padding-left: 70px; padding-right: 0; }
+            .dot-marker { position: absolute; left: 0; top: 0; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 7: BENTO DASHBOARD
+           ========================================= */
+        .bento-process {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, minmax(250px, auto));
+            gap: 1.5rem;
+        }
+
+        .b-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .b-start {
+            grid-column: span 1;
+            grid-row: span 2;
+            background: var(--primary);
+            color: white;
+        }
+        .b-start h3, .b-start p { color: white; }
+        .b-start .icon-box { background: rgba(255,255,255,0.2); color: white; }
+
+        .b-wide { grid-column: span 2; }
+        .b-img img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-top: 1rem; }
+
+        @media (max-width: 768px) {
+            .bento-process { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .b-start, .b-wide { grid-column: span 1; grid-row: auto; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 8: INTERACTIVE TABS
+           ========================================= */
+        .tabs-wrapper {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tabs-header {
+            display: flex;
+            background: var(--light);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: white; }
+        .tab-btn:hover:not(.active) { color: var(--dark); background: rgba(0,0,0,0.02); }
+
+        .tab-content { padding: 3rem; display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .tab-content.active { grid-template-columns: 1fr; gap: 1.5rem; }
+        }
+
+        /* =========================================
+           PROCESS LAYOUT 9: DARK MODE TERMINAL
+           ========================================= */
+        .terminal-container {
+            background: #111;
+            border-radius: var(--radius-md);
+            padding: 3rem;
+            color: #22c55e; /* Terminal Green */
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-step {
+            margin-bottom: 1.5rem;
+            border-left: 1px solid #333;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .terminal-step::before {
+            content: '>';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            background: #111;
+            color: white;
+        }
+
+        .t-cmd { color: white; margin-bottom: 0.5rem; display: block; }
+        .t-res { color: #94a3b8; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="service-section.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Services</a>
+            <a href="about-us.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">About</a>
+            <a href="process.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Process</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Process Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">9 Structural variations using your design tokens.</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro" style="margin: 0 auto 4rem; text-align: center;">
+                <span class="subtitle">Layout 01</span>
+                <h2>The Journey Timeline</h2>
+                <p>Classic "Snake" layout. Good for chronological histories or long workflows.</p>
+            </div>
+            
+            <div class="timeline-wrap">
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <span class="step-num">Step 01</span>
+                        <h3>Discovery</h3>
+                        <p style="color: var(--gray);">We begin by analyzing your current infrastructure and identifying key bottlenecks.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <span class="step-num">Step 02</span>
+                        <h3>Strategy</h3>
+                        <p style="color: var(--gray);">Our team develops a comprehensive roadmap tailored to your specific business goals.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <span class="step-num">Step 03</span>
+                        <h3>Execution</h3>
+                        <p style="color: var(--gray);">We implement the solution using agile methodology with weekly sprint reviews.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <span class="step-num">Step 04</span>
+                        <h3>Launch</h3>
+                        <p style="color: var(--gray);">Rigorous testing followed by a seamless deployment to production environments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 02</span>
+                <h2>3-Step Quick Start</h2>
+                <p>Simple grid with large typographic watermarks.</p>
+            </div>
+            
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="big-number">01</span>
+                    <div class="process-card-content">
+                        <h3>Book Online</h3>
+                        <p style="color: var(--gray);">Select your service and preferred time slot via our secure booking portal.</p>
+                    </div>
+                </div>
+                <div class="process-card">
+                    <span class="big-number">02</span>
+                    <div class="process-card-content">
+                        <h3>We Arrive</h3>
+                        <p style="color: var(--gray);">Our expert technicians arrive fully equipped to handle the job immediately.</p>
+                    </div>
+                </div>
+                <div class="process-card">
+                    <span class="big-number">03</span>
+                    <div class="process-card-content">
+                        <h3>Job Done</h3>
+                        <p style="color: var(--gray);">We complete the work, clean up, and ensure you are 100% satisfied.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03</span>
+                <h2>Detailed Walkthrough</h2>
+                <p>Alternating layout. Best for storytelling with visuals.</p>
+            </div>
+
+            <div class="zigzag-process-item">
+                <div class="zigzag-text">
+                    <span class="step-badge">Phase 1</span>
+                    <h3>Consultation & Planning</h3>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">Before we write a single line of code, we sit down to understand the 'why' behind your project. We define the user persona, the technical requirements, and the success metrics.</p>
+                    <ul style="color: var(--gray); padding-left: 1rem;">
+                        <li>Stakeholder Interviews</li>
+                        <li>Requirement Gathering</li>
+                        <li>Feasibility Studies</li>
+                    </ul>
+                </div>
+                <div class="zigzag-img">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Planning+Phase" alt="Planning">
+                </div>
+            </div>
+
+            <div class="zigzag-process-item">
+                <div class="zigzag-text">
+                    <span class="step-badge">Phase 2</span>
+                    <h3>Design & Prototyping</h3>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">Visualizing the solution. We create high-fidelity wireframes that allow you to click through the user journey and provide feedback before development begins.</p>
+                </div>
+                <div class="zigzag-img">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Design+Phase" alt="Design">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro" style="text-align: center; margin: 0 auto 4rem;">
+                <span class="subtitle">Layout 04</span>
+                <h2>The Continuous Cycle</h2>
+                <p>Ideal for Agile, SEO, or Maintenance loops.</p>
+            </div>
+
+            <div class="cycle-container">
+                <div class="cycle-arrow arrow-1">&rarr;</div>
+                <div class="cycle-arrow arrow-2">&rarr;</div>
+                <div class="cycle-card">
+                    <div class="cycle-icon">🔎</div>
+                    <h3>Audit</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Analyze data to find opportunities.</p>
+                </div>
+                
+                <div class="cycle-card">
+                    <div class="cycle-icon">⚙️</div>
+                    <h3>Optimize</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Implement technical fixes.</p>
+                </div>
+                
+                <div class="cycle-card">
+                    <div class="cycle-icon">🚀</div>
+                    <h3>Scale</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Expand reach with content.</p>
+                </div>
+
+                <div class="cycle-card">
+                    <div class="cycle-icon">📊</div>
+                    <h3>Report</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Review ROI and restart loop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="sticky-process">
+                <div class="sticky-visual">
+                    <span class="subtitle">Layout 05</span>
+                    <h2>Workflow<br>Integration</h2>
+                    <p style="margin-bottom: 2rem; color: var(--gray);">See how we integrate directly into your existing tools.</p>
+                    <img src="https://placehold.co/500x600/2563eb/ffffff?text=App+Interface" alt="App Interface">
+                </div>
+
+                <div class="scroll-content">
+                    <div class="scroll-step">
+                        <h3>1. Connect Data</h3>
+                        <p style="color: var(--gray);">Link your CRM or Database securely via our API.</p>
+                    </div>
+                    <div class="scroll-step">
+                        <h3>2. Map Fields</h3>
+                        <p style="color: var(--gray);">Use our drag-and-drop editor to match data points.</p>
+                    </div>
+                    <div class="scroll-step">
+                        <h3>3. Set Triggers</h3>
+                        <p style="color: var(--gray);">Define what actions start the automation workflow.</p>
+                    </div>
+                    <div class="scroll-step">
+                        <h3>4. Test Run</h3>
+                        <p style="color: var(--gray);">Simulate a transaction to ensure accuracy.</p>
+                    </div>
+                    <div class="scroll-step">
+                        <h3>5. Go Live</h3>
+                        <p style="color: var(--gray);">Activate the pipeline and monitor via dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Linear Progression</h2>
+                <p>Steps connected by a visual thread.</p>
+            </div>
+
+            <div class="connector-wrapper">
+                <div class="connector-step">
+                    <div class="dot-marker">1</div>
+                    <h3>Apply</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Submit your details online.</p>
+                </div>
+                <div class="connector-step">
+                    <div class="dot-marker">2</div>
+                    <h3>Review</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">We verify your information.</p>
+                </div>
+                <div class="connector-step">
+                    <div class="dot-marker">3</div>
+                    <h3>Approve</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Get your approval within 24h.</p>
+                </div>
+                <div class="connector-step">
+                    <div class="dot-marker">4</div>
+                    <h3>Fund</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Funds deposited to account.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07</span>
+                <h2>The Process Grid</h2>
+                <p>A "Bento" style view of how we work.</p>
+            </div>
+
+            <div class="bento-process">
+                <div class="b-card b-start">
+                    <div>
+                        <h3>Holistic Approach</h3>
+                        <p style="opacity: 0.9;">We look at the whole picture.</p>
+                    </div>
+                    <div style="font-size: 3rem; margin-top: auto;">↘</div>
+                </div>
+
+                <div class="b-card">
+                    <h4>Research</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Market & Competitor analysis.</p>
+                </div>
+
+                <div class="b-card">
+                    <h4>Design</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray);">UI/UX & Branding.</p>
+                </div>
+
+                <div class="b-card b-wide">
+                    <h4>Development & QA</h4>
+                    <div class="b-img">
+                        <img src="https://placehold.co/500x100/e2e8f0/64748b?text=Code+Review" alt="Code">
+                    </div>
+                </div>
+
+                <div class="b-card">
+                    <h4>Deploy</h4>
+                    <p style="font-size: 0.9rem; color: var(--gray);">CI/CD Pipelines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>Phased Approach</h2>
+                <p>Click tabs to view details of each phase.</p>
+            </div>
+
+            <div class="tabs-wrapper">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="openTab(event, 'phase1')">01. Onboarding</button>
+                    <button class="tab-btn" onclick="openTab(event, 'phase2')">02. Implementation</button>
+                    <button class="tab-btn" onclick="openTab(event, 'phase3')">03. Support</button>
+                </div>
+
+                <div id="phase1" class="tab-content active">
+                    <div>
+                        <h3>Onboarding Phase</h3>
+                        <p style="color: var(--gray);">We gather credentials, set up communication channels (Slack/Teams), and schedule the kickoff meeting.</p>
+                        <ul style="margin-top: 1rem; padding-left: 1rem; color: var(--gray);">
+                            <li>Kickoff Call</li>
+                            <li>Access Provisioning</li>
+                        </ul>
+                    </div>
+                    <img src="https://placehold.co/400x250/e2e8f0/64748b?text=Onboarding" style="width:100%; border-radius: 8px;">
+                </div>
+
+                <div id="phase2" class="tab-content">
+                    <div>
+                        <h3>Implementation Phase</h3>
+                        <p style="color: var(--gray);">The heavy lifting. Our team works in 2-week sprints to deliver value incrementally.</p>
+                        <ul style="margin-top: 1rem; padding-left: 1rem; color: var(--gray);">
+                            <li>Sprint Planning</li>
+                            <li>Daily Standups</li>
+                        </ul>
+                    </div>
+                    <img src="https://placehold.co/400x250/e2e8f0/64748b?text=Implementation" style="width:100%; border-radius: 8px;">
+                </div>
+
+                <div id="phase3" class="tab-content">
+                    <div>
+                        <h3>Support Phase</h3>
+                        <p style="color: var(--gray);">Post-launch monitoring and retainer support to ensure 99.9% uptime.</p>
+                        <ul style="margin-top: 1rem; padding-left: 1rem; color: var(--gray);">
+                            <li>Monthly Reports</li>
+                            <li>Security Patches</li>
+                        </ul>
+                    </div>
+                    <img src="https://placehold.co/400x250/e2e8f0/64748b?text=Support" style="width:100%; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #000; border-bottom: none;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 09</span>
+                <h2 style="color: white;">Technical Setup</h2>
+                <p style="color: #94a3b8;">For developer-focused audiences.</p>
+            </div>
+
+            <div class="terminal-container">
+                <div class="terminal-step">
+                    <span class="t-cmd">npm install @service/core</span>
+                    <span class="t-res">// Installing dependencies... Done (2.4s)</span>
+                </div>
+                <div class="terminal-step">
+                    <span class="t-cmd">service init --config</span>
+                    <span class="t-res">// Generating API keys... Keys generated.</span>
+                </div>
+                <div class="terminal-step">
+                    <span class="t-cmd">service deploy</span>
+                    <span class="t-res">// Deploying to Edge Network... Success. <br> > App live at https://app.yoursite.com</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple Tab Logic for Layout 08
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "grid";
+            // slight delay to allow display:grid to apply before adding opacity class
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10);
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

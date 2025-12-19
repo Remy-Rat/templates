@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Section Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        
+        /* Utility for icons */
+        .icon-box {
+            width: 50px; height: 50px; background: #eff6ff; color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; margin-bottom: 1.5rem; font-weight: bold;
+        }
+
+        /* =========================================
+           LAYOUTS 1-6 (From Original Set 1)
+           ========================================= */
+
+        /* --- LAYOUT 1: THE CLASSIC CARD GRID --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card-classic {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-classic:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        /* --- LAYOUT 2: ALTERNATING ZIG-ZAG (STACKED) --- */
+        .zigzag-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .zigzag-item:nth-child(even) .zigzag-content { order: 2; }
+        .zigzag-item:nth-child(even) .zigzag-image { order: 1; }
+        
+        @media (max-width: 768px) {
+            .zigzag-item { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 3rem; }
+            .zigzag-item:nth-child(even) .zigzag-content { order: 1; }
+            .zigzag-item:nth-child(even) .zigzag-image { order: 2; }
+        }
+
+        .zigzag-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- LAYOUT 3: THE BENTO GRID (ASYMMETRICAL) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 1.5rem;
+        }
+
+        .bento-item {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-large { grid-column: span 2; grid-row: span 2; background: var(--dark); color: white; }
+        .bento-large .icon-box { background: rgba(255,255,255,0.1); color: white; }
+        
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .bento-large { grid-column: span 1; grid-row: span 1; min-height: 400px; }
+        }
+
+        /* --- LAYOUT 4: STICKY SIDEBAR LIST --- */
+        .sticky-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .list-item {
+            padding-bottom: 3rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .list-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+
+        @media (max-width: 768px) {
+            .sticky-layout { grid-template-columns: 1fr; }
+            .sticky-header { position: static; margin-bottom: 2rem; }
+        }
+
+        /* --- LAYOUT 5: HOVER ACCORDION (PANELS) --- */
+        .panel-container {
+            display: flex;
+            height: 400px;
+            gap: 1rem;
+        }
+
+        .panel {
+            flex: 1;
+            background: var(--light);
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: flex 0.5s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+
+        .panel:hover { flex: 3; background: #e0f2fe; }
+        .panel h3 { transform: rotate(-90deg); transform-origin: left bottom; white-space: nowrap; position: absolute; bottom: 2rem; left: 2.5rem; }
+        .panel:hover h3 { transform: rotate(0); position: relative; bottom: 0; left: 0; }
+        .panel p { opacity: 0; transition: opacity 0.3s 0.2s; height: 0; }
+        .panel:hover p { opacity: 1; height: auto; margin-top: 0.5rem; }
+
+        @media (max-width: 768px) {
+            .panel-container { flex-direction: column; height: 600px; }
+            .panel h3 { transform: rotate(0); position: relative; bottom: 0; left: 0; }
+            .panel:hover { flex: 2; }
+        }
+
+        /* --- LAYOUT 6: CHECKLIST / PRICING STYLE --- */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .check-icon {
+            color: var(--primary);
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        /* =========================================
+           LAYOUTS 7-10 (From Original Set 2)
+           ========================================= */
+
+        /* --- LAYOUT 7: ADVANCED BENTO GRID --- */
+        .bento-advanced {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 240px;
+            gap: 1.5rem;
+        }
+
+        .bento-box {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-box:hover { transform: translateY(-3px); }
+        
+        /* Grid Spans */
+        .span-2-col { grid-column: span 2; }
+        .span-2-row { grid-row: span 2; }
+        .span-full { grid-column: span 4; }
+
+        /* Specific styles for bento types */
+        .bento-dark { background: var(--dark); color: white; }
+        .bento-img { padding: 0; }
+        .bento-img img { width: 100%; height: 100%; object-fit: cover; }
+        .bento-stat { justify-content: center; align-items: center; text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: 800; line-height: 1; color: var(--primary); }
+
+        @media (max-width: 900px) {
+            .bento-advanced { grid-template-columns: 1fr; grid-auto-rows: auto; }
+            .span-2-col, .span-2-row, .span-full { grid-column: span 1; grid-row: span 1; min-height: 250px; }
+        }
+
+        /* --- LAYOUT 8: HORIZONTAL SCROLL SNAP (CAROUSEL) --- */
+        .carousel-wrap {
+            overflow-x: auto;
+            display: flex;
+            gap: 2rem;
+            padding-bottom: 2rem; /* space for scrollbar */
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* smooth scroll iOS */
+        }
+        
+        .carousel-card {
+            min-width: 350px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            scroll-snap-align: start;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .carousel-card h3 { margin-bottom: 1rem; }
+        
+        .carousel-wrap::-webkit-scrollbar { height: 8px; }
+        .carousel-wrap::-webkit-scrollbar-track { background: var(--light); border-radius: 4px; }
+        .carousel-wrap::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .carousel-wrap::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+        /* --- LAYOUT 9: THE "SWISS" TABLE LIST --- */
+        .swiss-list {
+            border-top: 1px solid var(--dark);
+        }
+
+        .swiss-item {
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: baseline;
+            transition: background 0.2s;
+        }
+
+        .swiss-item:hover { background: #f8fafc; }
+        .swiss-num { font-family: monospace; color: var(--gray); }
+        .swiss-title { font-size: 1.75rem; font-weight: 500; }
+        .swiss-desc { color: var(--gray); font-size: 0.95rem; max-width: 300px; }
+
+        @media (max-width: 768px) {
+            .swiss-item { grid-template-columns: 1fr; gap: 1rem; }
+            .swiss-desc { max-width: 100%; }
+        }
+
+        /* --- LAYOUT 10: THE "FOCUS" GRID --- */
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1px;
+            background: var(--border); /* Creates the borders between items */
+            border: 1px solid var(--border);
+        }
+
+        .focus-item {
+            background: white;
+            padding: 3rem 2rem;
+            transition: opacity 0.3s;
+        }
+
+        /* The Magic: When hovering the grid container, dim ALL items */
+        .focus-grid:hover .focus-item { opacity: 0.4; }
+        /* Then, bring the specific hovered item back to full opacity */
+        .focus-grid .focus-item:hover { opacity: 1; z-index: 1; }
+
+        .focus-item h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .focus-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .tag { background: var(--light); font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 100px; color: var(--gray); }
+
+        /* =========================================
+           LAYOUTS 11-13 (NEW: FROM YOUR SCREENSHOTS)
+           ========================================= */
+
+        /* --- LAYOUT 11: THE TRADE SPLIT-CARD --- */
+        .trade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .trade-card {
+            background: #fff;
+            border-radius: 8px; /* Sharper corners as per screenshot 1 */
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+            border: 1px solid var(--border);
+        }
+
+        .trade-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .trade-img-wrap {
+            position: relative;
+            height: 220px;
+            width: 100%;
+        }
+
+        .trade-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Blue Icon Bubble Overlay */
+        .trade-icon-overlay {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .trade-content {
+            padding: 1.5rem;
+        }
+
+        .trade-content h3 {
+            color: #1e3a8a; /* Darker blue heading */
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .trade-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* --- LAYOUT 12: TRADE LIST VARIATION (CHECKMARKS) --- */
+        .trade-list {
+            list-style: none;
+            margin-top: 1rem;
+            padding: 0;
+        }
+
+        .trade-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .trade-list li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        /* --- LAYOUT 13: DARK OVERLAY CARD --- */
+        .overlay-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .overlay-card {
+            position: relative;
+            height: 300px;
+            border-radius: 20px; /* Heavy rounding as per screenshot 2 */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-decoration: none;
+            color: white;
+        }
+
+        .overlay-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+
+        .overlay-card:hover .overlay-bg {
+            transform: scale(1.05);
+        }
+
+        /* Dark gradient scrim */
+        .overlay-scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%);
+            z-index: 2;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 3;
+            padding: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #0ea5e9;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge.white { background: white; color: var(--dark); }
+
+        .overlay-content h3 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .overlay-content p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .overlay-link {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            ← Back to Library
+        </a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="hero.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Hero</a>
+            <a href="about-us.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">About</a>
+            <a href="service-section.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Services</a>
+            <a href="projects.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Projects</a>
+            <a href="testimonials.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Testimonials</a>
+            <a href="faq.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">FAQ</a>
+            <a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Contact</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Service Section Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">The complete reference collection</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 01</span>
+                <h2>The Classic Grid</h2>
+                <p>Standard 3-column layout. Best for when you have multiple services of equal weight.</p>
+            </div>
+            <div class="grid-3">
+                <article class="card-classic">
+                    <div class="icon-box">01</div>
+                    <h3>Web Development</h3>
+                    <p style="color: var(--gray); margin-top: 0.5rem;">We build blazing fast websites using the latest technologies available.</p>
+                    <a href="#" style="display:inline-block; margin-top:1rem; color:var(--primary); text-decoration:none; font-weight:600;">Learn more &rarr;</a>
+                </article>
+                <article class="card-classic">
+                    <div class="icon-box">02</div>
+                    <h3>UI/UX Design</h3>
+                    <p style="color: var(--gray); margin-top: 0.5rem;">User-centric design that looks beautiful and converts visitors into customers.</p>
+                    <a href="#" style="display:inline-block; margin-top:1rem; color:var(--primary); text-decoration:none; font-weight:600;">Learn more &rarr;</a>
+                </article>
+                <article class="card-classic">
+                    <div class="icon-box">03</div>
+                    <h3>SEO Optimization</h3>
+                    <p style="color: var(--gray); margin-top: 0.5rem;">Get found on Google with our comprehensive search engine strategies.</p>
+                    <a href="#" style="display:inline-block; margin-top:1rem; color:var(--primary); text-decoration:none; font-weight:600;">Learn more &rarr;</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 02</span>
+                <h2>The Zig-Zag Stack</h2>
+                <p>Best for detailed services where you need to show visuals alongside the text.</p>
+            </div>
+            
+            <div class="zigzag-item">
+                <div class="zigzag-content">
+                    <div class="icon-box">01</div>
+                    <h3>Custom Architecture</h3>
+                    <p style="color: var(--gray);">We don't just use templates. We architect custom solutions tailored specifically to your business logic. This ensures scalability and security from day one.</p>
+                </div>
+                <div class="zigzag-image">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Service+Image+1" alt="Service 1">
+                </div>
+            </div>
+
+            <div class="zigzag-item">
+                <div class="zigzag-content">
+                    <div class="icon-box">02</div>
+                    <h3>Cloud Infrastructure</h3>
+                    <p style="color: var(--gray);">Leverage the power of AWS or Azure. We set up robust cloud environments that handle traffic spikes with ease and keep your data safe.</p>
+                </div>
+                <div class="zigzag-image">
+                    <img src="https://placehold.co/600x400/e2e8f0/64748b?text=Service+Image+2" alt="Service 2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03</span>
+                <h2>The Bento Grid</h2>
+                <p>Modern and asymmetrical. Great for SaaS or tech brands.</p>
+            </div>
+            <div class="bento-grid">
+                <div class="bento-item bento-large">
+                    <div class="icon-box">★</div>
+                    <h3>Full-Service Consultancy</h3>
+                    <p style="opacity: 0.8; margin-top: 0.5rem;">Our flagship offering. We embed with your team to completely overhaul your digital stack.</p>
+                </div>
+                <div class="bento-item">
+                    <div class="icon-box">A</div>
+                    <h3>Audits</h3>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Deep dive code reviews.</p>
+                </div>
+                <div class="bento-item">
+                    <div class="icon-box">B</div>
+                    <h3>Branding</h3>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Visual identity systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="sticky-layout">
+                <div class="sticky-header">
+                    <span class="subtitle">Layout 04</span>
+                    <h2>Our Process</h2>
+                    <p style="color: var(--gray);">How we deliver excellence, step by step.</p>
+                    <a href="#" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px;">Get Started</a>
+                </div>
+                <div class="scrolling-content">
+                    <div class="list-item">
+                        <span style="color: var(--border); font-size: 3rem; font-weight: 700;">01</span>
+                        <h3>Discovery & Strategy</h3>
+                        <p style="color: var(--gray);">We start by listening. We map out your goals, target audience, and current pain points to create a roadmap.</p>
+                    </div>
+                    <div class="list-item">
+                        <span style="color: var(--border); font-size: 3rem; font-weight: 700;">02</span>
+                        <h3>Design & Prototyping</h3>
+                        <p style="color: var(--gray);">We create high-fidelity wireframes. You get to click through the app before we write a single line of code.</p>
+                    </div>
+                    <div class="list-item">
+                        <span style="color: var(--border); font-size: 3rem; font-weight: 700;">03</span>
+                        <h3>Development</h3>
+                        <p style="color: var(--gray);">Our engineers build the solution using agile methodology, with weekly check-ins and demos.</p>
+                    </div>
+                    <div class="list-item" style="border: none;">
+                        <span style="color: var(--border); font-size: 3rem; font-weight: 700;">04</span>
+                        <h3>Launch & Scale</h3>
+                        <p style="color: var(--gray);">We handle the deployment and monitor performance. We stick around to help you grow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 05</span>
+                <h2>Interactive Panels</h2>
+                <p>Hover over a panel to expand it. (Best on desktop)</p>
+            </div>
+            <div class="panel-container">
+                <div class="panel">
+                    <div>
+                        <h3>Consulting</h3>
+                        <p>Strategic advice for growing companies.</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div>
+                        <h3>Development</h3>
+                        <p>Building robust digital products.</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div>
+                        <h3>Marketing</h3>
+                        <p>Scaling your reach to new heights.</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div>
+                        <h3>Support</h3>
+                        <p>24/7 assistance for your team.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Detailed Capabilities</h2>
+                <p>A granular look at specific technologies and sub-services.</p>
+            </div>
+            <div class="checklist-grid">
+                <div class="check-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>React / Next.js</strong>
+                        <p style="font-size: 0.875rem; color: var(--gray);">Frontend architecture</p>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Node.js API</strong>
+                        <p style="font-size: 0.875rem; color: var(--gray);">Backend systems</p>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>PostgreSQL</strong>
+                        <p style="font-size: 0.875rem; color: var(--gray);">Database management</p>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>AWS Lambda</strong>
+                        <p style="font-size: 0.875rem; color: var(--gray);">Serverless functions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07</span>
+                <h2>Advanced Bento</h2>
+                <p>A complex masonry style mixing stats, images, and text.</p>
+            </div>
+            
+            <div class="bento-advanced">
+                <div class="bento-box span-2-row bento-dark">
+                    <div style="margin-bottom: 2rem;">
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 100px; font-size: 12px;">Featured</span>
+                    </div>
+                    <div>
+                        <h3>Strategic Partnerships</h3>
+                        <p style="opacity: 0.8; margin-top: 1rem;">We don't just act as a vendor. We enter a long-term partnership to guide your digital evolution over years, not weeks.</p>
+                    </div>
+                </div>
+
+                <div class="bento-box">
+                    <h3>UI Design</h3>
+                    <p style="color: var(--gray); font-size: 0.9rem;">Pixel perfect interfaces.</p>
+                    <div style="margin-top: auto; font-size: 2rem;">🎨</div>
+                </div>
+
+                <div class="bento-box span-2-col bento-img">
+                    <img src="https://placehold.co/600x300/e2e8f0/64748b?text=Team+Working" alt="Team">
+                </div>
+
+                <div class="bento-box bento-stat">
+                    <span class="stat-number">300%</span>
+                    <p>ROI Average</p>
+                </div>
+
+                <div class="bento-box bento-stat">
+                    <span class="stat-number">24/7</span>
+                    <p>Support</p>
+                </div>
+
+                <div class="bento-box span-2-col">
+                    <h3>Technical Audits</h3>
+                    <p style="color: var(--gray);">We dive deep into your existing codebase to find security flaws, performance bottlenecks, and architectural debt before they become problems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #fff;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>Horizontal Cards</h2>
+                <p>Great for mobile. Scroll sideways to see more options.</p>
+            </div>
+            
+            <div class="carousel-wrap">
+                <div class="carousel-card">
+                    <h3>01. Brand Strategy</h3>
+                    <p style="color: var(--gray);">Defining who you are, who your audience is, and why they should care.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>02. Visual Identity</h3>
+                    <p style="color: var(--gray);">Logos, typography, color palettes, and comprehensive style guides.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>03. Web Development</h3>
+                    <p style="color: var(--gray);">Custom coded websites that perform perfectly on all devices.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>04. Content Creation</h3>
+                    <p style="color: var(--gray);">Copywriting, photography, and video production to tell your story.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>05. SEO & Marketing</h3>
+                    <p style="color: var(--gray);">Strategies to bring organic traffic to your new digital doorstep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 09</span>
+                <h2>The "Swiss" List</h2>
+                <p>Minimalist. Structured. Professional.</p>
+            </div>
+
+            <div class="swiss-list">
+                <div class="swiss-item">
+                    <div class="swiss-num">(01)</div>
+                    <div class="swiss-title">Art Direction</div>
+                    <div class="swiss-desc">Guiding the visual tone of your project from concept to execution.</div>
+                </div>
+                <div class="swiss-item">
+                    <div class="swiss-num">(02)</div>
+                    <div class="swiss-title">Motion Design</div>
+                    <div class="swiss-desc">Bringing static assets to life with smooth, purposeful animation.</div>
+                </div>
+                <div class="swiss-item">
+                    <div class="swiss-num">(03)</div>
+                    <div class="swiss-title">3D Modeling</div>
+                    <div class="swiss-desc">Creating photorealistic product renders and environments.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 10</span>
+                <h2>The Focus Grid</h2>
+                <p>Hover over a service to dim the others.</p>
+            </div>
+
+            <div class="focus-grid">
+                <div class="focus-item">
+                    <h3>E-Commerce</h3>
+                    <p style="color: var(--gray);">Shopify & WooCommerce builds that drive sales.</p>
+                    <div class="focus-tags">
+                        <span class="tag">Shopify</span>
+                        <span class="tag">Stripe</span>
+                    </div>
+                </div>
+                <div class="focus-item">
+                    <h3>Web Applications</h3>
+                    <p style="color: var(--gray);">Complex dashboards and internal tools.</p>
+                    <div class="focus-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Laravel</span>
+                    </div>
+                </div>
+                <div class="focus-item">
+                    <h3>Mobile Apps</h3>
+                    <p style="color: var(--gray);">Native iOS and Android experiences.</p>
+                    <div class="focus-tags">
+                        <span class="tag">Swift</span>
+                        <span class="tag">Kotlin</span>
+                    </div>
+                </div>
+                <div class="focus-item">
+                    <h3>API Integration</h3>
+                    <p style="color: var(--gray);">Connecting your favorite tools together.</p>
+                    <div class="focus-tags">
+                        <span class="tag">REST</span>
+                        <span class="tag">GraphQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 11 (From Screenshot)</span>
+                <h2>The Trade Split-Card</h2>
+                <p>A classic layout for trade services. Image on top with an overlaid icon, followed by clean typography.</p>
+            </div>
+            
+            <div class="trade-grid">
+                <article class="trade-card">
+                    <div class="trade-img-wrap">
+                        <img src="https://placehold.co/600x400/1e293b/FFF?text=Roof+Image" alt="Roofing">
+                        <div class="trade-icon-overlay">🏠</div>
+                    </div>
+                    <div class="trade-content">
+                        <h3>Roof Repairs</h3>
+                        <p>Expert roof pointing and repairs to keep your home weather-tight. We work with trusted specialists to ensure the job is done right every time.</p>
+                    </div>
+                </article>
+
+                <article class="trade-card">
+                    <div class="trade-img-wrap">
+                        <img src="https://placehold.co/600x400/0f172a/FFF?text=Window+Image" alt="Windows">
+                        <div class="trade-icon-overlay">🪟</div>
+                    </div>
+                    <div class="trade-content">
+                        <h3>Window Cleaning</h3>
+                        <p>Crystal-clear windows that let the light in. Professional service with attention to detail for both residential and commercial properties.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 12 (Variation)</span>
+                <h2>Trade Card w/ Checkmarks</h2>
+                <p>The same visual style as above, but swapping paragraph text for a scannable features list.</p>
+            </div>
+            
+            <div class="trade-grid">
+                <article class="trade-card">
+                    <div class="trade-img-wrap">
+                        <img src="https://placehold.co/600x400/334155/FFF?text=Plumbing" alt="Plumbing">
+                        <div class="trade-icon-overlay">💧</div>
+                    </div>
+                    <div class="trade-content">
+                        <h3>Gutter Cleaning</h3>
+                        <ul class="trade-list">
+                            <li>Debris removal & bagging</li>
+                            <li>Downpipe flushing included</li>
+                            <li>Eco-friendly disposal</li>
+                            <li>Roof inspection report</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="trade-card">
+                    <div class="trade-img-wrap">
+                        <img src="https://placehold.co/600x400/475569/FFF?text=Carpentry" alt="Carpentry">
+                        <div class="trade-icon-overlay">🔨</div>
+                    </div>
+                    <div class="trade-content">
+                        <h3>Carpentry</h3>
+                        <ul class="trade-list">
+                            <li>Custom deck building</li>
+                            <li>Structural repairs</li>
+                            <li>Door & window framing</li>
+                            <li>Pergola installation</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #111; color: white; border-bottom: none;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 13 (From Screenshot)</span>
+                <h2 style="color: white;">Dark Mode Overlay</h2>
+                <p style="color: #94a3b8;">High impact cards using background images with a dark gradient scrim for readability.</p>
+            </div>
+
+            <div class="overlay-grid">
+                <a href="#" class="overlay-card">
+                    <img class="overlay-bg" src="https://placehold.co/400x500/222/FFF?text=Lighting" alt="Lighting">
+                    <div class="overlay-scrim"></div>
+                    <div class="overlay-content">
+                        <span class="badge">Most Popular</span>
+                        <h3>Lighting & Power</h3>
+                        <p>New lighting, extra powerpoints, and USB outlets where you need them.</p>
+                        <div class="overlay-link">Get Quote &rarr;</div>
+                    </div>
+                </a>
+
+                <a href="#" class="overlay-card">
+                    <img class="overlay-bg" src="https://placehold.co/400x500/333/FFF?text=Switchboard" alt="Switchboard">
+                    <div class="overlay-scrim"></div>
+                    <div class="overlay-content">
+                        <h3>Switchboards</h3>
+                        <p>Upgrade your board to meet current safety standards and protect your home.</p>
+                        <div class="overlay-link">Get Quote &rarr;</div>
+                    </div>
+                </a>
+
+                <a href="#" class="overlay-card">
+                    <img class="overlay-bg" src="https://placehold.co/400x500/444/FFF?text=EV+Charger" alt="EV Charger">
+                    <div class="overlay-scrim"></div>
+                    <div class="overlay-content">
+                        <h3>EV Installation</h3>
+                        <p>Future-proof your home with professional EV charging stations.</p>
+                        <div class="overlay-link">Get Quote &rarr;</div>
+                    </div>
+                </a>
+                
+                 <a href="#" class="overlay-card">
+                    <img class="overlay-bg" src="https://placehold.co/400x500/555/FFF?text=Emergency" alt="Emergency">
+                    <div class="overlay-scrim"></div>
+                    <div class="overlay-content">
+                        <span class="badge white">24/7 Available</span>
+                        <h3>Emergency Service</h3>
+                        <p>Power out? Sparking outlet? We're here when you need us most.</p>
+                        <div class="overlay-link" style="color: white;">Call Now &rarr;</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Section Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (Matched to Service Kit) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .section-intro.centered { margin: 0 auto 3rem auto; text-align: center; }
+        
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+
+        /* --- UTILITY: ACCORDION BASE STYLES --- */
+        /* These classes are used across multiple layouts */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        
+        .faq-trigger {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark);
+            transition: color 0.2s;
+        }
+
+        .faq-trigger:hover { color: var(--primary); }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            opacity: 0;
+        }
+
+        .faq-inner {
+            padding-bottom: 1.5rem;
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Active States */
+        .faq-item.active .faq-trigger { color: var(--primary); }
+        .faq-item.active .faq-icon { transform: rotate(45deg); } /* For + icons */
+        .faq-item.active .faq-content { opacity: 1; }
+
+        /* Icon variations */
+        .icon-chevron .faq-item.active .faq-icon { transform: rotate(180deg); }
+
+
+        /* =========================================
+           LAYOUT 1: CLASSIC ACCORDION (Centered)
+           ========================================= */
+        .classic-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* =========================================
+           LAYOUT 2: SPLIT SCREEN (Left Heading, Right FAQ)
+           ========================================= */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+        }
+
+        .split-content {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .split-list {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .split-list .faq-item:last-child { border-bottom: none; }
+
+        @media (max-width: 768px) {
+            .split-layout { grid-template-columns: 1fr; }
+            .split-content { position: static; margin-bottom: 2rem; }
+        }
+
+        /* =========================================
+           LAYOUT 3: GRID CARDS (Static / No Click)
+           ========================================= */
+        /* Re-using .grid-3 from Service Kit structure */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .faq-card {
+            background: #fff;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        .faq-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .faq-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* =========================================
+           LAYOUT 4: SIDEBAR CATEGORIES (Sticky Nav)
+           ========================================= */
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4rem;
+        }
+
+        .sidebar-nav {
+            position: sticky;
+            top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: fit-content;
+        }
+
+        .cat-link {
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .cat-link:hover, .cat-link.active {
+            background: #eff6ff; /* Light blue */
+            color: var(--primary);
+        }
+
+        .faq-group {
+            margin-bottom: 4rem;
+        }
+        
+        .group-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar-layout { grid-template-columns: 1fr; }
+            .sidebar-nav { flex-direction: row; overflow-x: auto; position: static; margin-bottom: 2rem; padding-bottom: 1rem; }
+            .cat-link { white-space: nowrap; }
+        }
+
+        /* =========================================
+           LAYOUT 5: THE BUBBLE CHAT (Visual Variant)
+           ========================================= */
+        .chat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .chat-item {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .chat-item::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--light);
+            transform: rotate(45deg);
+        }
+
+        .chat-question {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .avatar-circle {
+            width: 30px; height: 30px;
+            background: #cbd5e1;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .chat-grid { grid-template-columns: 1fr; }
+        }
+
+        /* =========================================
+           LAYOUT 6: DARK MODE (Inverted)
+           ========================================= */
+        .dark-section {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .dark-section h2 { color: white; }
+        
+        .dark-faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dark-faq-item .faq-trigger {
+            color: white;
+        }
+
+        .dark-faq-item .faq-inner {
+            color: #cbd5e1; /* Light gray text */
+        }
+        
+        .dark-faq-item.active .faq-trigger {
+            color: #60a5fa; /* Lighter blue for dark mode */
+        }
+
+        /* =========================================
+           LAYOUT 7: HORIZONTAL SCROLL SNAP
+           ========================================= */
+        .faq-carousel-wrap {
+            overflow-x: auto;
+            display: flex;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .faq-snap-card {
+            min-width: 400px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .faq-snap-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .faq-snap-card p { color: var(--gray); }
+        .faq-step { font-size: 4rem; font-weight: 900; color: #f1f5f9; line-height: 1; margin-bottom: 1rem; }
+
+        @media (max-width: 600px) {
+            .faq-snap-card { min-width: 300px; padding: 2rem; }
+        }
+
+        /* =========================================
+           LAYOUT 8: BOXED ACCORDION (Separated)
+           ========================================= */
+        .boxed-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .boxed-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            padding: 0 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .boxed-item.active {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        .boxed-item .faq-trigger { padding: 1.25rem 0; }
+        .boxed-item .faq-inner { padding-bottom: 1.5rem; }
+
+        /* =========================================
+           LAYOUT 9: FEATURED QUESTION (Hero Style)
+           ========================================= */
+        .hero-faq-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .featured-card {
+            background: var(--dark);
+            color: white;
+            border-radius: 16px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-image: linear-gradient(rgba(30, 41, 59, 0.9), rgba(30, 41, 59, 0.9)), url('https://placehold.co/800x600/1e293b/FFF?text=Support');
+            background-size: cover;
+        }
+
+        .featured-card h3 { color: white; font-size: 2rem; margin-bottom: 1rem; }
+        .featured-card p { color: #cbd5e1; font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        .btn-white {
+            background: white; color: var(--dark); padding: 1rem 2rem;
+            text-decoration: none; border-radius: 6px; font-weight: 700;
+            display: inline-block; width: fit-content;
+        }
+
+        .side-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .side-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-faq-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            ← Back to Library
+        </a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="hero.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Hero</a>
+            <a href="about-us.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">About</a>
+            <a href="service-section.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Services</a>
+            <a href="projects.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Projects</a>
+            <a href="testimonials.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Testimonials</a>
+            <a href="faq.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">FAQ</a>
+            <a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Contact</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>FAQ Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">9 Layout Variations matching the Service Kit</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro centered">
+                <span class="subtitle">Layout 01</span>
+                <h2>Frequently Asked Questions</h2>
+                <p>The standard centered layout. Clean, simple, and effective.</p>
+            </div>
+            
+            <div class="classic-wrapper">
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>How long does a typical project take?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Most standard websites take between 4-6 weeks from start to launch. Complex web applications or e-commerce platforms may take 8-12 weeks depending on the scope of features required.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>Do you offer ongoing support?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Yes! We offer several maintenance packages. These include security updates, content changes, and technical monitoring to ensure your site remains healthy.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        <span>Can I update the website myself?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Absolutely. We build on user-friendly CMS platforms. We provide a 1-hour training session upon handover so you feel confident managing your content.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="split-layout">
+                <div class="split-content">
+                    <span class="subtitle">Layout 02</span>
+                    <h2>Have Questions?</h2>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">
+                        We know digital transformation can be confusing. Here are the answers to the questions our clients ask us most often.
+                    </p>
+                    <a href="#" style="color: var(--primary); font-weight: 700; text-decoration: none;">Contact Support &rarr;</a>
+                </div>
+
+                <div class="split-list icon-chevron">
+                    <div class="faq-item">
+                        <button class="faq-trigger">
+                            <span>What is your pricing model?</span>
+                            <span class="faq-icon">⌄</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-inner">
+                                We work on a project-based flat fee. This ensures transparency—you know exactly what you are paying for with no surprise hourly billing.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-trigger">
+                            <span>Do you handle hosting?</span>
+                            <span class="faq-icon">⌄</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-inner">
+                                We can set up hosting for you on our preferred high-performance servers, or we can deploy to your existing infrastructure.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-trigger">
+                            <span>Is SEO included?</span>
+                            <span class="faq-icon">⌄</span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-inner">
+                                All our builds come with "Technical SEO" (fast speeds, proper tags, mobile responsiveness) built-in. Advanced content strategy is a separate service.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 03</span>
+                <h2>Quick Answers</h2>
+                <p>Best for short, punchy Q&A where you want everything visible at a glance.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="faq-card">
+                    <h3>Refund Policy</h3>
+                    <p>We offer a 100% money-back guarantee within the first 14 days of service if you are not satisfied with our initial concepts.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Payment Methods</h3>
+                    <p>We accept all major credit cards, bank transfers, and PayPal. For larger enterprise projects, we offer milestone-based invoicing.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Cancellation</h3>
+                    <p>You can cancel your monthly maintenance subscription at any time with 30 days written notice. No lock-in contracts.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Ownership</h3>
+                    <p>Once the final payment is made, you own 100% of the code and design assets. We do not license the website to you.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Timezone</h3>
+                    <p>Our team works primarily in UTC-5 (EST), but we have support staff available in London and Sydney for global coverage.</p>
+                </div>
+                <div class="faq-card">
+                    <h3>Meetings</h3>
+                    <p>We conduct all meetings via Zoom or Google Meet. We use Slack for daily asynchronous communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #fff;">
+        <div class="container">
+            <div class="sidebar-layout">
+                <aside class="sidebar-nav">
+                    <a href="#billing" class="cat-link active">Billing & Finance</a>
+                    <a href="#technical" class="cat-link">Technical Support</a>
+                    <a href="#account" class="cat-link">Account Management</a>
+                </aside>
+
+                <div class="sidebar-content">
+                    
+                    <div class="faq-group" id="billing">
+                        <h3 class="group-title">Billing & Finance</h3>
+                        <div class="faq-item">
+                            <button class="faq-trigger">
+                                <span>Where can I find my invoice?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-inner">
+                                    Invoices are automatically emailed to the billing contact on file. You can also download them from your client portal under the 'Finance' tab.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-trigger">
+                                <span>Is VAT included?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-inner">
+                                    Prices listed on the website exclude VAT. VAT will be calculated at checkout based on your business location.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-group" id="technical">
+                        <h3 class="group-title">Technical Support</h3>
+                        <div class="faq-item">
+                            <button class="faq-trigger">
+                                <span>My site is down, what do I do?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-content">
+                                <div class="faq-inner">
+                                    Please check our Status Page first. If systems are operational, email priority@ourservice.com for immediate emergency assistance.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 05</span>
+                <h2>Common Scenarios</h2>
+                <p>Presented in a conversational style.</p>
+            </div>
+            
+            <div class="chat-grid">
+                <div class="chat-item">
+                    <div class="chat-question">
+                        <div class="avatar-circle"></div>
+                        <span>I need to rush a project. Is that possible?</span>
+                    </div>
+                    <p style="color: var(--gray);">Yes, we offer an expedited track for a 20% rush fee. This allows us to allocate overtime resources to meet tight deadlines.</p>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-question">
+                        <div class="avatar-circle"></div>
+                        <span>Do you work with startups?</span>
+                    </div>
+                    <p style="color: var(--gray);">We love startups! We have specific packages designed for MVP launches that prioritize speed to market and core functionality.</p>
+                </div>
+
+                <div class="chat-item">
+                    <div class="chat-question">
+                        <div class="avatar-circle"></div>
+                        <span>What happens if I don't like the design?</span>
+                    </div>
+                    <p style="color: var(--gray);">Our process includes 3 rounds of revisions. We work collaboratively at the wireframe stage to ensure we don't move to high-fidelity until you are happy.</p>
+                </div>
+
+                <div class="chat-item">
+                    <div class="chat-question">
+                        <div class="avatar-circle"></div>
+                        <span>Do you provide copywriting?</span>
+                    </div>
+                    <p style="color: var(--gray);">We can! While many clients provide their own copy, we have in-house copywriters who can craft compelling text for your brand.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle" style="color: #60a5fa;">Layout 06</span>
+                <h2>Dark Mode Style</h2>
+                <p style="color: #94a3b8;">High contrast layout for tech-focused brands.</p>
+            </div>
+
+            <div class="classic-wrapper">
+                <div class="faq-item dark-faq-item">
+                    <button class="faq-trigger">
+                        <span>How secure is my data?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            We use bank-level 256-bit AES encryption for all data at rest and in transit. We are SOC2 compliant and undergo regular third-party audits.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item dark-faq-item">
+                    <button class="faq-trigger">
+                        <span>Can I export my data?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Yes, full data portability is a core belief of ours. You can export your data in JSON, CSV, or XML format at any time from the dashboard.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item dark-faq-item">
+                    <button class="faq-trigger">
+                        <span>Do you use cookies?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            We use essential cookies for session management. We do not sell your browsing data to third-party advertisers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 07</span>
+                <h2>Process FAQs</h2>
+                <p>Scroll horizontally to see the steps involved.</p>
+            </div>
+            
+            <div class="faq-carousel-wrap">
+                <div class="faq-snap-card">
+                    <div class="faq-step">01</div>
+                    <h3>Consultation</h3>
+                    <p>We meet to discuss your needs. <strong>Q: Is this free?</strong> A: Yes, the initial 30-minute discovery call is completely complimentary.</p>
+                </div>
+                <div class="faq-snap-card">
+                    <div class="faq-step">02</div>
+                    <h3>Proposal</h3>
+                    <p>We send a detailed scope. <strong>Q: How long is the quote valid?</strong> A: Our proposals are valid for 14 days from the date of issue.</p>
+                </div>
+                <div class="faq-snap-card">
+                    <div class="faq-step">03</div>
+                    <h3>Kickoff</h3>
+                    <p>We start the project. <strong>Q: What do I need to bring?</strong> A: Just your logo files and any brand guidelines you currently have.</p>
+                </div>
+                <div class="faq-snap-card">
+                    <div class="faq-step">04</div>
+                    <h3>Development</h3>
+                    <p>We build the site. <strong>Q: Can I see progress?</strong> A: Yes, you get access to a staging server to watch the build in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro centered">
+                <span class="subtitle">Layout 08</span>
+                <h2>Boxed Accordion</h2>
+                <p>Each question gets its own card, creating a distinct separation.</p>
+            </div>
+
+            <div class="classic-wrapper boxed-stack">
+                <div class="faq-item boxed-item">
+                    <button class="faq-trigger">
+                        <span>How do I reset my password?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Go to the login page and click "Forgot Password". We will email you a secure link to reset your credentials.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item boxed-item">
+                    <button class="faq-trigger">
+                        <span>Can I add multiple users?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Yes, the Team Plan allows for up to 5 users. The Enterprise plan allows for unlimited seats.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item boxed-item">
+                    <button class="faq-trigger">
+                        <span>Do you integrate with Slack?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="faq-inner">
+                            Yes, we have a native Slack app. You can receive notifications about new leads directly in your chosen channel.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc; border-bottom: none;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 09</span>
+                <h2>Featured Support</h2>
+            </div>
+            
+            <div class="hero-faq-grid">
+                <div class="featured-card">
+                    <h3>Still need help?</h3>
+                    <p>Can't find the answer you're looking for? Our support team is online 24/7 to help you resolve any issues.</p>
+                    <a href="#" class="btn-white">Open Live Chat</a>
+                </div>
+
+                <div class="side-stack">
+                    <div class="side-card">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Sales Inquiry</h4>
+                        <p style="font-size: 0.9rem; color: var(--gray);">For enterprise pricing.</p>
+                        <a href="#" style="color: var(--primary); font-size: 0.9rem; font-weight: 700; display: block; margin-top: 0.5rem;">sales@company.com</a>
+                    </div>
+                    <div class="side-card">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Media Press</h4>
+                        <p style="font-size: 0.9rem; color: var(--gray);">For press kits.</p>
+                        <a href="#" style="color: var(--primary); font-size: 0.9rem; font-weight: 700; display: block; margin-top: 0.5rem;">press@company.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('.faq-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const item = trigger.closest('.faq-item');
+                    const content = item.querySelector('.faq-content');
+                    
+                    // Toggle Active Class
+                    item.classList.toggle('active');
+
+                    // Handle max-height for smooth animation
+                    if (item.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+
+                    // Optional: Accordion behavior (close others when one opens)
+                    // Uncomment the lines below if you want only one open at a time
+                    /*
+                    triggers.forEach(otherTrigger => {
+                        const otherItem = otherTrigger.closest('.faq-item');
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-content').style.maxHeight = null;
+                        }
+                    });
+                    */
+                });
+            });
+        });
+    </script>
+</body>
+</html>

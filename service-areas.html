@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Areas Master Reference</title>
+    <style>
+        /* --- GLOBAL RESET & TYPOGRAPHY (Matched to Reference) --- */
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 5rem;
+        }
+
+        section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--dark); }
+        .section-intro { max-width: 600px; margin-bottom: 3rem; }
+        .subtitle { color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.875rem; display: block; margin-bottom: 0.5rem; }
+        
+        /* Utility for icons */
+        .icon-box {
+            width: 50px; height: 50px; background: #eff6ff; color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; margin-bottom: 1.5rem; font-weight: bold;
+        }
+
+        /* Button Utility */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        /* =========================================
+           SERVICE AREA LAYOUTS (1-9)
+           ========================================= */
+
+        /* --- LAYOUT 1: MAP SPLIT (SIDE-BY-SIDE) --- */
+        .area-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .area-map-container {
+            width: 100%;
+            height: 500px;
+            background: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .area-map-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .area-list-check li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--gray);
+        }
+        .area-list-check li:last-child { border-bottom: none; }
+        .area-list-check li::before {
+            content: "📍"; /* Or specific SVG icon */
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 900px) {
+            .area-split { grid-template-columns: 1fr; }
+            .area-map-container { height: 300px; order: -1; } /* Map on top mobile */
+        }
+
+        /* --- LAYOUT 2: THE REGIONAL GRID (CARDS) --- */
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .region-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            background: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .region-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--primary);
+        }
+
+        .region-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .region-icon {
+            width: 40px; height: 40px; background: #eff6ff; color: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        .suburb-list {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* --- LAYOUT 3: DARK SEO BLOCK (FOOTER STYLE) --- */
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .seo-col h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .seo-col ul { list-style: none; }
+        .seo-col li { margin-bottom: 0.75rem; }
+        .seo-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+        .seo-col a:hover { color: white; }
+
+        @media (max-width: 768px) {
+            .seo-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* --- LAYOUT 4: RADIUS HERO (CENTERED) --- */
+        .radius-box {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            border: 1px dashed var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radius-stat {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .radius-note {
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* --- LAYOUT 5: VISUAL CITYSCAPES (VERTICAL CARDS) --- */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .city-card {
+            position: relative;
+            height: 450px;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .city-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .city-card:hover .city-bg { transform: scale(1.1); }
+        .city-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+            z-index: 1;
+        }
+        .city-content { position: relative; z-index: 2; width: 100%; }
+        
+        .city-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .city-grid { grid-template-columns: 1fr; height: auto; }
+            .city-card { height: 300px; }
+        }
+
+        /* --- LAYOUT 6: HORIZONTAL PILLS (SCROLL) --- */
+        .pill-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .area-pill {
+            flex: 0 0 auto;
+            padding: 1rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            background: white;
+            color: var(--gray);
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .area-pill:hover, .area-pill.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eff6ff;
+        }
+        
+        .pill-scroll::-webkit-scrollbar { height: 6px; }
+        .pill-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        /* --- LAYOUT 7: "LOCAL EXPERT" STYLE --- */
+        .expert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .expert-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .expert-img {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #eff6ff;
+        }
+
+        .expert-info h4 { margin-bottom: 0.25rem; }
+        .expert-area { color: var(--primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; }
+
+        /* --- LAYOUT 8: POSTCODE LOOKUP --- */
+        .lookup-container {
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            background-image: radial-gradient(circle at top right, #334155 0%, transparent 40%);
+        }
+
+        .lookup-form {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            position: relative;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lookup-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        @media (max-width: 600px) {
+            .lookup-form { flex-direction: column; }
+        }
+
+        /* --- LAYOUT 9: MINIMAL TEXT LIST --- */
+        .minimal-zones {
+            border-top: 1px solid var(--border);
+        }
+
+        .zone-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .zone-title { font-size: 1.5rem; font-weight: 600; }
+        .zone-desc { color: var(--gray); max-width: 500px; text-align: right; }
+
+        @media (max-width: 768px) {
+            .zone-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .zone-desc { text-align: left; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Template Navigation -->
+    <nav style="background: #0f172a; padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <a href="index.html" style="color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Library</a>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="service-section.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Services</a>
+            <a href="contact.html" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 4px;">Contact</a>
+            <a href="service-areas.html" style="color: #60a5fa; text-decoration: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; background: rgba(96,165,250,0.15); border-radius: 4px;">Service Areas</a>
+        </div>
+    </nav>
+
+    <div style="background: var(--dark); color: white; padding: 4rem 2rem; text-align: center;">
+        <h1>Service Areas Master Kit</h1>
+        <p style="opacity: 0.8; margin-top: 1rem;">Geographic layouts, maps, and location lists.</p>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 01</span>
+                <h2>Primary Service Zones</h2>
+                <p>A classic split layout featuring a prominent map visual and a checklist of key areas.</p>
+            </div>
+            
+            <div class="area-split">
+                <div class="area-content">
+                    <h3 style="margin-bottom: 1.5rem;">Greater Metropolitan Area</h3>
+                    <p style="color: var(--gray); margin-bottom: 2rem;">We proudly service the entire metro region. Our teams are stationed in key hubs to ensure rapid response times, usually within 60 minutes for emergencies.</p>
+                    
+                    <ul class="area-list-check">
+                        <li><strong>CBD & Inner City:</strong> Commercial & Residential</li>
+                        <li><strong>Northern Suburbs:</strong> Up to Epping & Craigieburn</li>
+                        <li><strong>South East:</strong> Bayside through to Dandenong</li>
+                        <li><strong>Western Corridor:</strong> Footscray to Werribee</li>
+                        <li><strong>Eastern Suburbs:</strong> Box Hill to Ringwood</li>
+                    </ul>
+
+                    <a href="#" class="btn" style="margin-top: 2rem;">View Coverage Map</a>
+                </div>
+                <div class="area-map-container">
+                    <img src="https://placehold.co/800x600/e2e8f0/64748b?text=Interactive+Map+Placeholder" alt="Service Map">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 02</span>
+                <h2>Locations We Serve</h2>
+                <p>Detailed cards for specific council areas or major regions.</p>
+            </div>
+            
+            <div class="region-grid">
+                <div class="region-card">
+                    <div class="region-header">
+                        <div class="region-icon">N</div>
+                        <h3>North Side</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Our HQ is located here, ensuring our fastest response times.</p>
+                    <div class="suburb-list">
+                        Preston, Reservoir, Thornbury, Northcote, Brunswick, Coburg, Pascoe Vale.
+                    </div>
+                </div>
+
+                <div class="region-card">
+                    <div class="region-header">
+                        <div class="region-icon">E</div>
+                        <h3>Eastern Suburbs</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Servicing the leafy east with a dedicated team of five.</p>
+                    <div class="suburb-list">
+                        Hawthorn, Camberwell, Kew, Balwyn, Box Hill, Doncaster, Mitcham.
+                    </div>
+                </div>
+
+                <div class="region-card">
+                    <div class="region-header">
+                        <div class="region-icon">S</div>
+                        <h3>Bayside & South</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Coastal specialists familiar with marine-grade requirements.</p>
+                    <div class="suburb-list">
+                        St Kilda, Brighton, Hampton, Sandringham, Bentleigh, Caulfield.
+                    </div>
+                </div>
+
+                <div class="region-card">
+                    <div class="region-header">
+                        <div class="region-icon">W</div>
+                        <h3>Western Suburbs</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--gray);">Rapidly expanding coverage for new developments.</p>
+                    <div class="suburb-list">
+                        Yarraville, Seddon, Williamstown, Newport, Altona, Point Cook.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro" style="margin: 0 auto 3rem; text-align: center;">
+                <span class="subtitle">Layout 03</span>
+                <h2>Service Radius</h2>
+            </div>
+            
+            <div class="radius-box">
+                <div class="radius-stat">50km</div>
+                <h3 style="margin-bottom: 1rem;">From the CBD</h3>
+                <p class="radius-note">We travel up to 50km from the city center without any additional travel fees. For regional work outside this zone, please contact us for a custom quote.</p>
+                <div style="margin-top: 2rem;">
+                    <span style="background: white; padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.8rem; border: 1px solid var(--border); color: var(--gray);">✓ No Travel Fees inside Zone 1</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 04</span>
+                <h2>Featured Regions</h2>
+                <p>Image-heavy navigation for major service territories.</p>
+            </div>
+
+            <div class="city-grid">
+                <a href="#" class="city-card">
+                    <img class="city-bg" src="https://placehold.co/400x600/1e293b/FFF?text=City+Skyline" alt="City">
+                    <div class="city-overlay"></div>
+                    <div class="city-content">
+                        <span class="city-badge">High Demand</span>
+                        <h3>Central Business District</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Commercial & High-rise specialists.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="city-card">
+                    <img class="city-bg" src="https://placehold.co/400x600/334155/FFF?text=Suburbs" alt="Suburbs">
+                    <div class="city-overlay"></div>
+                    <div class="city-content">
+                        <span class="city-badge">Residential</span>
+                        <h3>Outer Metro</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Home renovations and new builds.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="city-card">
+                    <img class="city-bg" src="https://placehold.co/400x600/475569/FFF?text=Coastline" alt="Coast">
+                    <div class="city-overlay"></div>
+                    <div class="city-content">
+                        <span class="city-badge">Specialist</span>
+                        <h3>Mornington Peninsula</h3>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Holiday homes and rentals.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 05</span>
+                <h2>Quick Filter</h2>
+                <p>Mobile-friendly horizontal scroll for quick location selection.</p>
+            </div>
+            
+            <div class="pill-scroll">
+                <div class="area-pill active">All Locations</div>
+                <div class="area-pill">Melbourne CBD</div>
+                <div class="area-pill">South Yarra</div>
+                <div class="area-pill">Richmond</div>
+                <div class="area-pill">Brunswick</div>
+                <div class="area-pill">Fitzroy</div>
+                <div class="area-pill">Collingwood</div>
+                <div class="area-pill">Prahran</div>
+                <div class="area-pill">Windsor</div>
+                <div class="area-pill">St Kilda</div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--gray); margin-top: 1rem;">* Swipe to see more locations</p>
+        </div>
+    </section>
+
+    <section style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 06</span>
+                <h2>Meet Your Local Techs</h2>
+                <p>Building trust by showing the specific people assigned to areas.</p>
+            </div>
+
+            <div class="expert-grid">
+                <div class="expert-card">
+                    <img src="https://placehold.co/150x150/e2e8f0/64748b?text=Dave" alt="Technician" class="expert-img">
+                    <div class="expert-info">
+                        <span class="expert-area">North Side</span>
+                        <h4>Dave Matthews</h4>
+                        <p style="font-size: 0.9rem; color: var(--gray);">Senior Electrician</p>
+                    </div>
+                </div>
+
+                <div class="expert-card">
+                    <img src="https://placehold.co/150x150/e2e8f0/64748b?text=Sarah" alt="Technician" class="expert-img">
+                    <div class="expert-info">
+                        <span class="expert-area">Bayside</span>
+                        <h4>Sarah Jenkins</h4>
+                        <p style="font-size: 0.9rem; color: var(--gray);">Project Manager</p>
+                    </div>
+                </div>
+
+                <div class="expert-card">
+                    <img src="https://placehold.co/150x150/e2e8f0/64748b?text=Mike" alt="Technician" class="expert-img">
+                    <div class="expert-info">
+                        <span class="expert-area">West</span>
+                        <h4>Mike Ross</h4>
+                        <p style="font-size: 0.9rem; color: var(--gray);">Installation Lead</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="lookup-container">
+                <span class="subtitle" style="color: #60a5fa; margin-bottom: 1rem; display: block;">Layout 07</span>
+                <h2 style="color: white; margin-bottom: 1rem;">Check Availability</h2>
+                <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto;">Enter your postcode to see if our team is currently servicing your neighborhood.</p>
+                
+                <form class="lookup-form">
+                    <input type="text" class="lookup-input" placeholder="Enter Postcode (e.g. 3000)">
+                    <button type="button" class="btn" style="border: none; cursor: pointer;">Check Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle">Layout 08</span>
+                <h2>Zone Breakdown</h2>
+                <p>Clean, structured list for detailing specific travel charges or conditions per zone.</p>
+            </div>
+
+            <div class="minimal-zones">
+                <div class="zone-row">
+                    <div class="zone-title">Zone 1 (Green)</div>
+                    <div class="zone-desc">Within 20km of CBD. No travel charges apply. Standard call-out rates.</div>
+                </div>
+                <div class="zone-row">
+                    <div class="zone-title">Zone 2 (Yellow)</div>
+                    <div class="zone-desc">20km - 50km radius. $55 travel surcharge applies for jobs under 2 hours.</div>
+                </div>
+                <div class="zone-row">
+                    <div class="zone-title">Zone 3 (Red)</div>
+                    <div class="zone-desc">Regional & Rural. By appointment only. Day rates apply plus travel expenses.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--dark); color: white;">
+        <div class="container">
+            <div class="section-intro">
+                <span class="subtitle" style="color: #60a5fa;">Layout 09</span>
+                <h2 style="color: white;">Areas We Service</h2>
+                <p style="color: #94a3b8;">High density link block, perfect for footer SEO optimization.</p>
+            </div>
+            
+            <div class="seo-grid">
+                <div class="seo-col">
+                    <h4>Inner North</h4>
+                    <ul>
+                        <li><a href="#">Brunswick</a></li>
+                        <li><a href="#">Northcote</a></li>
+                        <li><a href="#">Fitzroy</a></li>
+                        <li><a href="#">Collingwood</a></li>
+                        <li><a href="#">Carlton</a></li>
+                    </ul>
+                </div>
+                <div class="seo-col">
+                    <h4>South East</h4>
+                    <ul>
+                        <li><a href="#">South Yarra</a></li>
+                        <li><a href="#">Prahran</a></li>
+                        <li><a href="#">Windsor</a></li>
+                        <li><a href="#">Armadale</a></li>
+                        <li><a href="#">Malvern</a></li>
+                    </ul>
+                </div>
+                <div class="seo-col">
+                    <h4>Bayside</h4>
+                    <ul>
+                        <li><a href="#">St Kilda</a></li>
+                        <li><a href="#">Elwood</a></li>
+                        <li><a href="#">Brighton</a></li>
+                        <li><a href="#">Hampton</a></li>
+                        <li><a href="#">Sandringham</a></li>
+                    </ul>
+                </div>
+                <div class="seo-col">
+                    <h4>Western Suburbs</h4>
+                    <ul>
+                        <li><a href="#">Footscray</a></li>
+                        <li><a href="#">Yarraville</a></li>
+                        <li><a href="#">Seddon</a></li>
+                        <li><a href="#">Williamstown</a></li>
+                        <li><a href="#">Newport</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
